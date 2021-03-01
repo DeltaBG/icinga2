@@ -1,0 +1,14 @@
+---
+- name: Generate Icinga2 setup token # noqa 305
+  shell: icingacli setup token create
+  register: icinga2_setup_token
+
+- name: Set proper permissions on setup token
+  file:
+    path: "{{ icinga2_icingaweb_install_dir }}/setup.token"
+    owner: "{{ icinga2_icingaweb_user }}"
+    group: "{{ icinga2_icingaweb_group }}"
+    mode: 0755
+
+- debug:
+    msg: "{{ icinga2_setup_token.stdout }}. Navigate to http://{{ ansible_default_ipv4.address }}/icingaweb2/setup in order to finish the setup."

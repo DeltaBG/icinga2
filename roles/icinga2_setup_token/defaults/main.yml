@@ -1,0 +1,4 @@
+---
+icinga2_icingaweb_user: icingaweb2
+icinga2_icingaweb_group: icingaweb2
+icinga2_icingaweb_install_dir: /etc/icingaweb2
