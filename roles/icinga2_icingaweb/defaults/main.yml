@@ -1,0 +1,22 @@
+---
+icinga2_icingaweb_packages:
+  - icingaweb2
+
+icinga2_icingaweb_conf_dir: /etc/icingaweb2
+icinga2_icingaweb_install_path: /usr/share/icingaweb2
+
+icinga2_icingaweb_uri: /icingaweb2
+
+icinga2_icingaweb_user: icingaweb2
+icinga2_icingaweb_group: icingaweb2
+
+# Icinga2 mysql specific vars.
+icinga2_mysql_user: icinga2_ido
+icinga2_mysql_user_password: 'changeme'
+icinga2_mysql_database_name: icinga2_ido
+
+# Icinga Web specific vars.
+icinga2_web_mysql_user: icinga2_web
+icinga2_web_mysql_user_password: 'changeme'
+icinga2_web_mysql_database_name: icinga2_web
+icinga2_icingaweb_mysql_charset: latin1

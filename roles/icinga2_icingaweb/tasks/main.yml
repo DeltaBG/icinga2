@@ -1,0 +1,40 @@
+---
+- name: Install Icinga2 web packages
+  package:
+    name: "{{ icinga2_icingaweb_packages|join(',') }}"
+    state: present
+
+- name: Configure Icinga2 web server (Apache)
+  template:
+    src: icingaweb2.conf.j2
+    dest: /etc/httpd/conf.d/icingaweb2.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart httpd
+  when: "icinga2_web_server == 'apache'"
+
+- name: Set proper permissions on Icingaweb directory
+  file:
+    path: "{{ icinga2_icingaweb_install_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ icinga2_icingaweb_user }}"
+    group: "{{ icinga2_icingaweb_group }}"
+    mode: 0755
+
+- name: Configure Graphite web
+  template:
+    src: graphite-web.conf.j2
+    dest: /etc/httpd/conf.d/graphite-web.conf
+    mode: 0755
+  when: "icinga2_web_server == 'apache'"
+  notify: restart httpd
+
+- name: Configure Icingaweb resources.ini
+  template:
+    src: resources.ini.j2
+    dest: "{{ icinga2_icingaweb_conf_dir }}/resources.ini"
+    owner: "{{ icinga2_web_server }}"
+    group: "{{ icinga2_icingaweb_group }}"
+    mode: 0755
