@@ -1,0 +1,16 @@
+---
+- name: Create user defined database for Icinga2.
+  mysql_db:
+    name: "{{ icinga2_mysql_database_name }}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    state: present
+
+- name: Create user defined database for Icinga2 Web.
+  mysql_db:
+    name: "{{ icinga2_web_mysql_database_name }}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    state: present

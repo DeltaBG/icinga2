@@ -1,0 +1,24 @@
+---
+- name: Create Icinga2 MySQL user for Icinga2.
+  mysql_user:
+    name: "{{ icinga2_mysql_user }}"
+    password: "{{ icinga2_mysql_user_password }}"
+    host: "{{ mysql_database_bind_host|default('localhost') }}"
+    priv: "{{ icinga2_mysql_database_name }}.*:ALL"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    state: present
+  no_log: true
+
+- name: Create Icinga2 MySQL user for Icinga2 Web.
+  mysql_user:
+    name: "{{ icinga2_web_mysql_user }}"
+    password: "{{ icinga2_web_mysql_user_password }}"
+    host: "{{ mysql_database_bind_host|default('localhost') }}"
+    priv: "{{ icinga2_web_mysql_database_name }}.*:ALL"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    state: present
+  no_log: true

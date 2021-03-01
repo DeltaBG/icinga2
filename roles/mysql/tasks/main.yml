@@ -1,0 +1,23 @@
+---
+- name: Include distribution dependent variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Include install tasks file.
+  include_tasks: install.yml
+
+- name: Include configure tasks file.
+  include_tasks: configure.yml
+
+- name: Include database tasks file.
+  include_tasks: database.yml
+
+- name: Include user tasks file.
+  include_tasks: user.yml
+
+- name: Include post_tasks file.
+  include_tasks: post_tasks.yml
