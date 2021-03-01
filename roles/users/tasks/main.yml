@@ -1,0 +1,7 @@
+---
+- name: Create userdefined users.
+  user:
+    name: "{{ item.name }}"
+    group: "{{ item.group }}"
+    groups: "{{ item.groups|default(omit) }}"
+  loop: "{{ icinga2_users }}"

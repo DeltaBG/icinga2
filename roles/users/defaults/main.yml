@@ -1,0 +1,8 @@
+---
+# Icinga2 users and groups. Used in icingaweb and carbon.
+icinga2_users:
+  - name: icingaweb2
+    group: icingaweb2
+  - name: apache
+    group: apache
+    groups: apache, icingaweb2
