@@ -1,0 +1,116 @@
+---
+- name: Check if Graphite module has been already installed.
+  stat:
+    path: "{{ icinga2_icingaweb_install_path }}/modules/graphite"
+  register: graphite_installed
+
+- name: Install Graphite prerequisite packages.
+  package:
+    name: "{{ icinga2_graphite_prerequsites|join(',') }}"
+    state: present
+
+- name: Create Graphite install directory.
+  file:
+    path: "{{ icinga2_icingaweb_install_path }}/modules/graphite"
+    state: directory
+    owner: "{{ icinga2_graphite_user }}"
+    group: "{{ icinga2_graphite_group }}"
+    mode: 0755
+  when: not graphite_installed.stat.exists
+
+- name: Download and install Graphite module.
+  git:
+    repo: "{{ icinga2_graphite_download_url }}"
+    dest: "{{ icinga2_icingaweb_install_path }}/modules/graphite"
+    version: "{{ icinga2_graphite_version }}"
+  when: not graphite_installed.stat.exists
+
+- name: Create icinga2_icingaweb_conf_dir
+  file:
+    path: "{{ icinga2_icingaweb_conf_dir }}/modules/graphite"
+    state: directory
+    owner: "{{ icinga2_graphite_user }}"
+    group: "{{ icinga2_graphite_group }}"
+    mode: 0755
+
+- name: Set proper permissions on Graphite.
+  file:
+    path: "{{ icinga2_icingaweb_install_path }}/modules/graphite"
+    state: directory
+    recurse: yes
+    owner: "{{ icinga2_graphite_user }}"
+    group: "{{ icinga2_graphite_group }}"
+    mode: 0755
+
+- name: Generate carbon-config.ini.
+  template:
+    src: carbon-config.ini.j2
+    dest: "{{ icinga2_icingaweb_conf_dir }}/modules/graphite/config.ini"
+    owner: "{{ icinga2_icingaweb_user }}"
+    group: "{{ icinga2_icingaweb_group }}"
+    mode: 0755
+
+- name: Install required Graphite Python packages.
+  package:
+    name: "{{ icinga2_graphite_python_packages|join(',') }}"
+    state: present
+
+- name: Install required Graphite Python modules.
+  pip:
+    name: "{{ item }}"
+  loop: "{{ icinga2_graphite_python_modules }}"
+
+- name: Configure graphite.wsgi.
+  template:
+    src: graphite.wsgi.j2
+    dest: "{{ icinga2_graphite_install_dir }}/conf/graphite.wsgi"
+    mode: 0755
+  when: "icinga2_web_server == 'apache'"
+
+- name: Configure carbon.conf.
+  template:
+    src: carbon.conf.j2
+    dest: "{{ icinga2_graphite_conf_dir }}/carbon.conf"
+    mode: 0755
+
+- name: Configure storage-schemas.
+  template:
+    src: storage-schemas.conf.j2
+    dest: "{{ icinga2_graphite_conf_dir }}/storage-schemas.conf"
+    mode: 0755
+
+- name: Configure init script.
+  template:
+    src: carbon-cache.service.j2
+    dest: /etc/init.d/carbon-cache
+    mode: 0755
+
+- name: Get migration script.
+  get_url:
+    url: "{{ icinga2_graphite_migration_script_download_url }}"
+    dest: "{{ icinga2_graphite_install_dir }}/webapp/"
+    mode: 0755
+    owner: "{{ icinga2_icingaweb_user }}"
+    group: "{{ icinga2_icingaweb_group }}"
+
+- name: Run migration script. # noqa 305
+  shell: "python3 ./manage.py migrate"
+  args:
+    chdir: "{{ icinga2_graphite_install_dir }}/webapp/"
+
+- name: Fix Graphite permissions.
+  file:
+    path: "{{ icinga2_graphite_install_dir }}"
+    state: directory
+    recurse: yes
+    owner: "{{ icinga2_icingaweb_user }}"
+    group: "{{ icinga2_icingaweb_group }}"
+    mode: 0755
+  when: "icinga2_web_server == 'apache'"
+
+- name: Enable and start Carbon service.
+  service:
+    name: carbon-cache
+    state: started
+    enabled: yes
+...
