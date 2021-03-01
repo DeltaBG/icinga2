@@ -1,0 +1,34 @@
+---
+- name: Setup Icinga2 api if enabled. # noqa 305
+  shell: icinga2 api setup
+  when: "'api' in icinga2_enabled_features"
+
+- name: Configure Icinga2 api feature if present and not setup.
+  template:
+    src: api.conf.j2
+    dest: "{{ icinga2_config_dir }}/features-available/api.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  when: "'api' in icinga2_enabled_features"
+
+- name: Configure API user and password.
+  template:
+    src: api-users.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/api-users.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  when: "'api' in icinga2_enabled_features"
+
+- name: Generate TicketSalt for the first time. # noqa 305
+  shell: openssl rand -base64 30
+  register: icinga2_ticket_salt
+  when: "'api' in icinga2_enabled_features"
+
+- name: Set Icinga2 TicketSalt once.
+  lineinfile:
+    path: "{{ icinga2_config_dir }}/constants.conf"
+    regexp: "const TicketSalt =.*"
+    line: 'const TicketSalt = "{{ icinga2_ticket_salt.stdout }}"'
+  when: "'api' in icinga2_enabled_features"

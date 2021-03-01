@@ -13,3 +13,6 @@ icinga2_enabled_features:
   - syslog
   - graphite
   - api
+
+icinga2_api_username: root
+icinga2_api_password: apipassword
