@@ -1,0 +1,6 @@
+---
+- name: Create userdefined groups.
+  group:
+    name: "{{ item.name }}"
+    state: present
+  loop: "{{ icinga2_groups }}"
