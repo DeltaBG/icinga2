@@ -1,0 +1,15 @@
+---
+# Icinga2 user and group configudation.
+icinga2_user: icinga
+icinga2_group: icinga
+
+# Icinga2 config directory. /etc/icinga2 is default and generally does not need to be changed.
+icinga2_config_dir: /etc/icinga2
+
+# Additional Icinga2 features that we want to be enabled by default.
+icinga2_enabled_features:
+  - command
+  - ido-mysql
+  - syslog
+  - graphite
+  - api

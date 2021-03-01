@@ -1,0 +1,25 @@
+---
+- name: Install icinga2-ido-mysql package if enabled.
+  package:
+    name: icinga2-ido-mysql
+    state: present
+  when: "'ido-mysql' in icinga2_enabled_features"
+
+- name: Enable Icinga2 features.
+  file:
+    src: "{{ icinga2_config_dir }}/features-available/{{ item }}.conf"
+    path: "{{ icinga2_config_dir }}/features-enabled/{{ item }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    state: link
+    mode: 0755
+  loop: "{{ icinga2_enabled_features }}"
+
+- name: Configure Icinga2 database access in ido-mysql if present.
+  template:
+    src: ido-mysql.conf.j2
+    dest: "{{ icinga2_config_dir }}/features-available/ido-mysql.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  when: "'ido-mysql' in icinga2_enabled_features"
