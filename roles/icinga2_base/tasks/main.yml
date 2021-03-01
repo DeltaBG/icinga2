@@ -1,0 +1,16 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Include repo tasks file.
+  include_tasks: repo.yml
+  when: icinga2_can_install
+
+- name: Include install tasks file
+  include_tasks: install.yml
+  when: icinga2_can_install
