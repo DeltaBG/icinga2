@@ -52,3 +52,8 @@
     login_unix_socket: "{{ mysql_socket }}"
     state: absent
   no_log: true
+
+- name: Configure mysql_database_host
+  lineinfile:
+    line: "bind-address={{ mysql_database_host }}"
+    dest: /etc/my.cnf.d/mysql-server.cnf
