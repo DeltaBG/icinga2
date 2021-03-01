@@ -1,7 +1,4 @@
 ---
-# Icinga2 install directory.
-icinga2_install_dir: /etc/icinga2
-
 # Icinga2 repo key
 icinga2_repo_key: https://packages.icinga.com/icinga.key
 
