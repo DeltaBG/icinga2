@@ -1,0 +1,12 @@
+---
+- name: Ensure php packages are installed.
+  package:
+    name: "{{ php_packages|join(',') }}"
+    state: present
+
+- name: Enable and start php-fpm service.
+  service:
+    name: php-fpm
+    state: started
+    enabled: yes
+  when: "'php-fpm' in php_packages"
