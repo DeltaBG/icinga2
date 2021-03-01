@@ -3,4 +3,6 @@
 icinga2_repo_key: https://packages.icinga.com/icinga.key
 
 # Icinga2 package name
-icinga2_package_name: icinga2
+icinga2_package_names: 
+  - icinga2
+  - icingacli
