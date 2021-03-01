@@ -1,0 +1,17 @@
+---
+- name: Ensure httpd package is installed.
+  package:
+    name: httpd
+    state: present
+
+- name: Enable and start httpd service.
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Install python3-mod_wsgi
+  package:
+    name: python3-mod_wsgi
+    state: present
+  when: enable_httpd_mod_wsgi
