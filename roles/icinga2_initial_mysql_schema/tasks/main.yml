@@ -1,0 +1,7 @@
+---
+- name: Import initial Icinga2 MySQL schema.
+  mysql_db:
+    name: icinga2_mysql_user
+    state: import
+    target: /usr/share/icinga2-ido-mysql/schema/mysql.sql
+    force: yes
