@@ -3,7 +3,7 @@
 mysql_root_password: ''
 mysql_socket: /var/lib/mysql/mysql.sock
 mysql_enable_root_my_cnf: yes
-mysql_database_bind_host: localhost
+mysql_database_host: localhost
 
 # Icinga2 specific vars.
 icinga2_mysql_user: icinga2_ido

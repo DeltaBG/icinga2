@@ -3,7 +3,7 @@
   mysql_user:
     name: "{{ icinga2_mysql_user }}"
     password: "{{ icinga2_mysql_user_password }}"
-    host: "{{ mysql_database_bind_host|default('localhost') }}"
+    host: "{{ mysql_database_host|default('localhost') }}"
     priv: "{{ icinga2_mysql_database_name }}.*:ALL"
     login_user: root
     login_password: "{{ mysql_root_password }}"
@@ -15,7 +15,7 @@
   mysql_user:
     name: "{{ icinga2_web_mysql_user }}"
     password: "{{ icinga2_web_mysql_user_password }}"
-    host: "{{ mysql_database_bind_host|default('localhost') }}"
+    host: "{{ mysql_database_host|default('localhost') }}"
     priv: "{{ icinga2_web_mysql_database_name }}.*:ALL"
     login_user: root
     login_password: "{{ mysql_root_password }}"
