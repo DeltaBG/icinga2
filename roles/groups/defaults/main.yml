@@ -1,4 +1,5 @@
 ---
 # Icinga2 users and groups. Used in icingaweb and carbon.
+icinga2_icingaweb_group: icingaweb2
 icinga2_groups:
-  - name: icingaweb2
+  - name: "{{ icinga2_icingaweb_group }}"
