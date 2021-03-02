@@ -1,0 +1,10 @@
+---
+- name: Enable PowerTools repo.
+  yum_repository:
+    name: PowerTools
+    description: CentOS-PowerTools.repo
+    file: CentOS-PowerTools
+    mirrorlist: http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=PowerTools&infra=$infra
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
