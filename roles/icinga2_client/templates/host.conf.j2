@@ -55,4 +55,16 @@ object Host "{{ inventory_hostname }}" {
     vars.load_cload5 = {{ (ansible_facts.processor_vcpus * 1.9)|int }}
     vars.load_cload15 = {{ (ansible_facts.processor_vcpus * 1.8)|int }}
   {% endif %}
+
+  {% if ansible_facts.smartctl is defined and ansible_facts.smartctl|length>0 %}
+
+    {% for device in ansible_facts.smartctl.devices %}
+        vars.smart_devices["smart_device {{ device.name }}"] = {
+          smart_device = "{{ device.device }}"
+          smart_type = "{{ device.type }}"
+        }
+
+    {% endfor %}
+  {% endif %}
+
 }
