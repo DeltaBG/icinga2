@@ -18,9 +18,9 @@
  */
 
 apply Service for (iostats => config in host.vars.iostats_disks){
-	  import "generic-service"
-      check_command = "iostats_custom"
-      command_endpoint = host.vars.agent_endpoint
-      assign where host.vars.agent_endpoint
-      vars += config
+  import "generic-service"
+  check_command = "iostats_custom"
+  command_endpoint = host.vars.agent_endpoint
+  assign where host.vars.agent_endpoint
+  vars += config
 }
