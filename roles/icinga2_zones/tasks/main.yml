@@ -1,0 +1,9 @@
+---
+- name: Configure Icinga2 zones.
+  template:
+    src: zones.conf.j2
+    dest: "{{ icinga2_config_dir }}/zones.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  notify: restart icinga2
