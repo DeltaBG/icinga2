@@ -6,4 +6,4 @@ icinga2_users:
     group: "{{ icinga2_icingaweb_group }}"
   - name: apache
     group: apache
-    groups: "apache, {{ icinga2_icingaweb_group }}
+    groups: "apache, {{ icinga2_icingaweb_group }}"
