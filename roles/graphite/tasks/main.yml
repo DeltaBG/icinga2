@@ -25,7 +25,7 @@
     version: "{{ icinga2_graphite_version }}"
   when: not graphite_installed.stat.exists
 
-- name: Create icinga2_icingaweb_conf_dir
+- name: Create {{ icinga2_icingaweb_conf_dir }}
   file:
     path: "{{ icinga2_icingaweb_conf_dir }}/modules/graphite"
     state: directory
