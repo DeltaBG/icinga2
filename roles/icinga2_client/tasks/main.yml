@@ -18,7 +18,7 @@
   delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
   register: client_config
 
-- name: Restart master config.
+- name: Restart master icinga2 service.
   service:
     name: icinga2
     state: restarted
