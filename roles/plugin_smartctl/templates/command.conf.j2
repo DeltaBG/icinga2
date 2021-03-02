@@ -1,0 +1,19 @@
+object CheckCommand "smart_pl" {
+  // Plugin name without 'check_' prefix
+
+  command = [ "sudo", PluginDir + "/check_smart" ]
+  
+  arguments = {
+    "-d" = {
+      value = "$smart_disk$"
+      description = "a physical block device to be SMART monitored"
+    }
+    "-i" = {
+      value = "$smart_type$"
+      description = "device's interface type (auto|ata|scsi|nvme|3ware,N|areca,N|hpt,L/M/N|cciss,N|megaraid,N)"
+    }
+  }
+
+  vars.smart_disk = "/dev/sda"
+  vars.smart_type = "sat"
+}

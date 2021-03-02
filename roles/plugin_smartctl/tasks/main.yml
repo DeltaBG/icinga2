@@ -1,0 +1,43 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Check if plugin has been already installed.
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_smart"
+  register: icinga2_check_smart_chk
+
+- name: Download plugin.
+  get_url:
+    url: "{{ icinga2_check_smart_download_url }}"
+    dest: "/tmp/"
+  when: not icinga2_check_smart_chk.stat.exists
+
+- name: Unpack plugin archive.
+  unarchive:
+    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
+    dest: "/tmp/"
+    remote_src: yes
+    mode: 0755
+  when: not icinga2_check_smart_chk.stat.exists
+
+- name: Copy plugin to final destination.
+  copy:
+    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}/check_smart.pl"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_smart"
+    remote_src: yes
+    mode: 0755
+  when: not icinga2_check_smart_chk.stat.exists
+
+- name: Cleanup plugin archive.
+  unarchive:
+    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
+    dest: "/tmp/"
+    remote_src: yes
+    mode: 0755
+  when: not icinga2_check_smart_chk.stat.exists

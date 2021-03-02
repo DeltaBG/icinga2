@@ -1,0 +1,9 @@
+---
+- name: Configure Icinga2 command.
+  template:
+    src: command.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/command_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  notify: restart icinga2

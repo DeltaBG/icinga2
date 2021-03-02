@@ -1,0 +1,4 @@
+object ServiceGroup "SMART" {
+  display_name = "SMART Checks"
+  assign where match("*smart*", service.check_command)
+}
