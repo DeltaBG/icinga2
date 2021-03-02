@@ -1,0 +1,9 @@
+---
+- name: Install required libraries.
+  package:
+    name: python3-libselinux
+    state: present
+
+- name: Disable SELinux
+  selinux:
+    state: "{{ selinux_state }}"
