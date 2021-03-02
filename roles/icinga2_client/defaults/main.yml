@@ -1,0 +1,5 @@
+---
+icinga2_user: icinga
+icinga2_group: icinga
+icinga2_config_dir: /etc/icinga2
+icinga2_zone_master_endpoint_name: "master"

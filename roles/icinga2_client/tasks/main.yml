@@ -1,0 +1,26 @@
+---
+- name: Ensure zones master endpoint dir is present.
+  file:
+    path: "{{ icinga2_config_dir }}/zones.d/{{ icinga2_zone_master_endpoint_name }}"
+    state: directory
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+
+- name: Configure the client.
+  template:
+    src: host.conf.j2
+    dest: "{{ icinga2_config_dir }}/zones.d/{{ icinga2_zone_master_endpoint_name }}/{{ inventory_hostname }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+  register: client_config
+
+- name: Restart master config.
+  service:
+    name: icinga2
+    state: restarted
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+  when: client_config.changed
