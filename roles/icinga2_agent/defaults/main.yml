@@ -1,0 +1,4 @@
+---
+icinga2_api_username: root
+icinga2_api_password: apipassword
+icinga2_api_port: 5665
