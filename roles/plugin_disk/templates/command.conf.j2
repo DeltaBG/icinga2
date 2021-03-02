@@ -1,0 +1,154 @@
+object CheckCommand "disk_custom" {
+        command = [ PluginDir + "/check_disk" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$disk_wfree$"
+                        description = "Exit with WARNING status if less than INTEGER units of disk are free or Exit with WARNING status if less than PERCENT of disk space is free"
+                        required = true
+                        order = -3
+                }
+                "-c" = {
+                        value = "$disk_cfree$"
+                        description = "Exit with CRITICAL status if less than INTEGER units of disk are free or Exit with CRITCAL status if less than PERCENT of disk space is free"
+                        required = true
+                        order = -3
+                }
+                "-W" = {
+                        value = "$disk_inode_wfree$"
+                        description = "Exit with WARNING status if less than PERCENT of inode space is free"
+                        order = -3
+                }
+                "-K" = {
+                        value = "$disk_inode_cfree$"
+                        description = "Exit with CRITICAL status if less than PERCENT of inode space is free"
+                        order = -3
+                }
+                "-p" = {
+                        value = "$disk_partitions$"
+                        description = "Path or partition (may be repeated)"
+                        repeat_key = true
+                        order = 1
+                }
+                "-p_old" = {
+                        key = "-p"
+                        value = "$disk_partition$"
+                        order = 1
+                }
+                "-x" = {
+                        value = "$disk_partitions_excluded$"
+                        description = "Ignore device (only works if -p unspecified)"
+                }
+                "-x_old" = {
+                        key = "-x"
+                        value = "$disk_partition_excluded$"
+                }
+                "-C" = {
+                        set_if = "$disk_clear$"
+                        description = "Clear thresholds"
+                }
+                "-E" = {
+                        set_if = "$disk_exact_match$"
+                        description = "For paths or partitions specified with -p, only check for exact paths"
+                }
+                "-e" = {
+                        set_if = "$disk_errors_only$"
+                        description = "Display only devices/mountpoints with errors"
+                }
+                "-f" = {
+                        set_if = "$disk_ignore_reserved$"
+                        description = "Don't account root-reserved blocks into freespace in perfdata"
+                }
+                "-g" = {
+                        value = "$disk_group$"
+                        description = "Group paths. Thresholds apply to (free-)space of all partitions together"
+                }
+                "-k" = {
+                        set_if = "$disk_kilobytes$"
+                        description = "Same as --units kB"
+                }
+                "-l" = {
+                        set_if = "$disk_local$"
+                        description = " Only check local filesystems"
+                }
+                "-L" = {
+                        set_if = "$disk_stat_remote_fs$"
+                        description = "Only check local filesystems against thresholds. Yet call stat on remote filesystems to test if they are accessible (e.g. to detect Stale NFS Handles)"
+                }
+                "-M" = {
+                        set_if = "$disk_mountpoint$"
+                        description = "Display the mountpoint instead of the partition"
+                }
+                "-m" = {
+                        set_if = "$disk_megabytes$"
+                        description = "Same as --units MB"
+                }
+                "-A" = {
+                        set_if = "$disk_all$"
+                        description = "Explicitly select all paths. This is equivalent to -R .*"
+                        order = 1
+                }
+                "-R" = {
+                        value = "$disk_eregi_path$"
+                        description = "Case insensitive regular expression for path/partition (may be repeated)"
+                        repeat_key = true
+                }
+                "-r" = {
+                        value = "$disk_ereg_path$"
+                        description = "Regular expression for path or partition (may be repeated)"
+                        repeat_key = true
+                }
+                "-I" = {
+                        value = "$disk_ignore_eregi_path$"
+                        description = "Regular expression to ignore selected path/partition (case insensitive) (may be repeated)"
+                        repeat_key = true
+                        order = 2
+                }
+                "-i" = {
+                        value = "$disk_ignore_ereg_path$"
+                        description = "Regular expression to ignore selected path or partition (may be repeated)"
+                        repeat_key = true
+                        order = 2
+                }
+                "-t" = {
+                        value = "$disk_timeout$"
+                        description = "Seconds before connection times out (default: 10)"
+                }
+                "-u" = {
+                        value = "$disk_units$"
+                        description = "Choose bytes, kB, MB, GB, TB (default: MB)"
+                }
+                "-X" = {
+                        value = "$disk_exclude_type$"
+                        description = "Ignore all filesystems of indicated type (may be repeated)"
+                        repeat_key = true
+                }
+                "-N" = {
+                        value = "$disk_include_type$"
+                        description = "Check only filesystems of indicated type (may be repeated)"
+                        repeat_key = true
+                }
+        }
+
+        vars.disk_wfree = "20%"
+        vars.disk_cfree = "10%"
+        vars.disk_megabytes = true
+        vars.disk_exclude_type = [
+                "none",
+                "tmpfs",
+                "sysfs",
+                "proc",
+                "configfs",
+                "devtmpfs",
+                "devfs",
+                "mtmfs",
+                "tracefs",
+                "cgroup",
+                "fuse.gvfsd-fuse",
+                "fuse.gvfs-fuse-daemon",
+                "fdescfs",
+                "overlay",
+                "nsfs",
+                "squashfs"
+        ]
+}

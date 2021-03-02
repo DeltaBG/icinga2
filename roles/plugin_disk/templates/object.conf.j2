@@ -1,0 +1,4 @@
+object ServiceGroup "disk_custom" {
+  display_name = "Disk Checks"
+  assign where match("disk*", service.check_command)
+}
