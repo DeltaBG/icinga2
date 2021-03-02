@@ -1,0 +1,33 @@
+object CheckCommand "swap_custom" {
+        command = [ PluginDir + "/check_swap" ]
+
+        {% raw %}arguments = {
+                "-w" = {{
+                        if (macro("$swap_integer$")) {
+                                return macro("$swap_wfree$")
+                        } else {
+                                return macro("$swap_wfree$%")
+                        }
+                }}
+                "-c" = {{
+                        if (macro("$swap_integer$")) {
+                                return macro("$swap_cfree$")
+                        } else {
+                                return macro("$swap_cfree$%")
+                        }
+                }}
+                "-a" = {
+                        set_if = "$swap_allswaps$"
+                        description = "Conduct comparisons for all swap partitions, one by one"
+                }
+                "-n" = {
+                        value = "$swap_noswap$"
+                        description = "Resulting state when there is no swap regardless of thresholds. Possible values are \"ok\", \"warning\", \"critical\", \"unknown\". Defaults to \"critical\""
+                }
+        }{% endraw %}
+
+        vars.swap_wfree = 50
+        vars.swap_cfree = 25
+        vars.swap_integer = false
+        vars.swap_allswaps = false
+}
