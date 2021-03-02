@@ -1,0 +1,4 @@
+---
+icinga2_nagios_plugins_all_packages:
+  - perl-utf8-all
+  - nagios-plugins-all

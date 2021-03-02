@@ -1,0 +1,14 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install Nagios plugins all packages.
+  package:
+    name: "{{ icinga2_nagios_plugins_all_packages|join(',') }}"
+    state: present
+  notify: restart icinga2

@@ -1,0 +1,4 @@
+---
+icinga2_nagios_plugins_all_packages:
+  - monitoring-plugins-basic
+  - monitoring-plugins-standard

@@ -1,0 +1,3 @@
+---
+icinga2_nagios_plugins_all_packages:
+  - nagios-plugins-all
