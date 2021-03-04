@@ -5,7 +5,7 @@
     dest: "{{ icinga2_config_dir }}/conf.d/service_{{ ansible_role_name }}.conf"
     owner: "{{ icinga2_user }}"
     group: "{{ icinga2_group }}"
-    mode: 0755
+    mode: 0644
   notify: restart icinga2
 
 - name: Configure Icinga2 service groups.
@@ -14,5 +14,5 @@
     dest: "{{ icinga2_config_dir }}/conf.d/group_{{ ansible_role_name }}.conf"
     owner: "{{ icinga2_user }}"
     group: "{{ icinga2_group }}"
-    mode: 0755
+    mode: 0644
   notify: restart icinga2

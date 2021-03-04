@@ -5,5 +5,5 @@
     dest: "{{ icinga2_config_dir }}/conf.d/command_{{ ansible_role_name }}.conf"
     owner: "{{ icinga2_user }}"
     group: "{{ icinga2_group }}"
-    mode: 0755
+    mode: 0644
   notify: restart icinga2
