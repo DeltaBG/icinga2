@@ -2,3 +2,4 @@
 # Dummy task. We do not need to do anything here.
 - debug:
     msg: "{{ ansible_role_name }}"
+  no_log: true
