@@ -1,0 +1,4 @@
+object ServiceGroup "raid" {
+  display_name = "RAID Checks"
+  assign where match("raid*", service.check_command)
+}
