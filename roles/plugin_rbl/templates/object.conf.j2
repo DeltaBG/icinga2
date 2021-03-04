@@ -1,0 +1,4 @@
+object ServiceGroup "swap_custom" {
+  display_name = "Swap Checks"
+  assign where match("swap_custom*", service.check_command)
+}

@@ -1,0 +1,7 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+## check_rbl
+icinga2_check_rbl_version: 1.5.6
+icinga2_check_rbl_download_url: https://github.com/matteocorti/check_rbl/archive/v{{ icinga2_check_rbl_version }}.tar.gz
