@@ -65,6 +65,7 @@ object Host "{{ inventory_hostname }}" {
     vars.load_cload15 = {{ (ansible_facts.processor_vcpus * 1.8)|int }}
   {% endif %}
 
+  # Smartctl plugin
   {% if ansible_facts.smartctl is defined and ansible_facts.smartctl|length>0 %}
 
     {% for device in ansible_facts.smartctl.devices %}
@@ -76,4 +77,8 @@ object Host "{{ inventory_hostname }}" {
     {% endfor %}
   {% endif %}
 
+  # RAID plugin
+  {% if ansible_facts.raid is defined and ansible_facts.raid|length>0 %}
+    vars.raid_enabled = true
+  {% endif %}
 }
