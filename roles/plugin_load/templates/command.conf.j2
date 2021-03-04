@@ -1,0 +1,28 @@
+object CheckCommand "load_custom" {
+        command = [ PluginDir + "/check_load" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$load_wload1$,$load_wload5$,$load_wload15$"
+                        description = "Exit with WARNING status if load average exceeds WLOADn"
+                }
+                "-c" = {
+                        value = "$load_cload1$,$load_cload5$,$load_cload15$"
+                        description = "Exit with CRITICAL status if load average exceed CLOADn; the load average format is the same used by 'uptime' and 'w'"
+                }
+                "-r" = {
+                        set_if = "$load_percpu$"
+                        description = "Divide the load averages by the number of CPUs (when possible)"
+                }
+        }
+
+        vars.load_wload1 = 5.0
+        vars.load_wload5 = 4.0
+        vars.load_wload15 = 3.0
+
+        vars.load_cload1 = 10.0
+        vars.load_cload5 = 6.0
+        vars.load_cload15 = 4.0
+
+        vars.load_percpu = false
+}

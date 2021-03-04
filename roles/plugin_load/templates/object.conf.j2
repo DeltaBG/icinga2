@@ -1,0 +1,4 @@
+object ServiceGroup "load_custom" {
+  display_name = "Load Checks"
+  assign where match("load_custom*", service.check_command)
+}
