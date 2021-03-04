@@ -1,4 +1,4 @@
-object ServiceGroup "swap_custom" {
-  display_name = "Swap Checks"
-  assign where match("swap_custom*", service.check_command)
+object ServiceGroup "RBL" {
+  display_name = "RBL Checks"
+  assign where match("rbl_custom*", service.check_command)
 }

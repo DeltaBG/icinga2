@@ -1,33 +1,35 @@
-object CheckCommand "swap_custom" {
-        command = [ PluginDir + "/check_swap" ]
+object CheckCommand "rbl_custom" {
+        import "ipv4-or-ipv6"
 
-        {% raw %}arguments = {
-                "-w" = {{
-                        if (macro("$swap_integer$")) {
-                                return macro("$swap_wfree$")
-                        } else {
-                                return macro("$swap_wfree$%")
-                        }
-                }}
-                "-c" = {{
-                        if (macro("$swap_integer$")) {
-                                return macro("$swap_cfree$")
-                        } else {
-                                return macro("$swap_cfree$%")
-                        }
-                }}
-                "-a" = {
-                        set_if = "$swap_allswaps$"
-                        description = "Conduct comparisons for all swap partitions, one by one"
-                }
-                "-n" = {
-                        value = "$swap_noswap$"
-                        description = "Resulting state when there is no swap regardless of thresholds. Possible values are \"ok\", \"warning\", \"critical\", \"unknown\". Defaults to \"critical\""
-                }
-        }{% endraw %}
+        command = [ PluginContribDir + "/check_rbl" ]
 
-        vars.swap_wfree = 50
-        vars.swap_cfree = 25
-        vars.swap_integer = false
-        vars.swap_allswaps = false
+        arguments = {
+                "-H" = {
+                        value = "$rbl_hostname$"
+                        description = "Name or IP address of SMTP server to check."
+                }
+                "-s" = {
+                        value = "$rbl_server$"
+                        description = "List of RBL servers as an array."
+                        required = true
+                        repeat_key = true
+                }
+                "-w" = {
+                        value = "$rbl_warning$"
+                        description = "Number of blacklisting servers for a warning."
+                }
+                "-c" = {
+                        value = "$rbl_critical$"
+                        description = "Number of blacklisting servers for a critical."
+                }
+                "-t" = {
+                        value = "$rbl_timeout$"
+                        description = "Seconds before plugin times out (default: 15)."
+                }
+        }
+
+        vars.rbl_hostname = "$check_address$"
+        vars.rbl_timeout = 15
+        vars.rbl_warning = 1
+        vars.rbl_critical = 1
 }

@@ -17,9 +17,10 @@
  * own description, e.g. "{{ inventory_hostname }}".
  */
 
-apply Service "swap" {
-  import "generic-service"
-  check_command = "swap_custom"
+apply Service for (rbl => config in host.vars.rbl_hostnames){
+  check_command = "rbl_custom"
   command_endpoint = host.vars.agent_endpoint
-  assign where host.vars.swap_enabled == true
+  assign where host.vars.agent_endpoint
+  ignore where host.vars.rbl_disabled == true
+  vars += config
 }
