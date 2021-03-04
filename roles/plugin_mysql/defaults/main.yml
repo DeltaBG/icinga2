@@ -1,0 +1,6 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+icinga2_check_mysql_health_version: check_mysql_health-2.2.2
+icinga2_check_mysql_health_download_url: https://labs.consol.de/assets/downloads/nagios/{{ icinga2_check_mysql_health_version }}.tar.gz

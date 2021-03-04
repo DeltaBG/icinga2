@@ -1,0 +1,9 @@
+object ServiceGroup "MySQL" {
+  display_name = "MySQL Checks"
+  assign where match("mysql", service.check_command)
+}
+
+object ServiceGroup "MySQL Slaves" {
+  display_name = "MySQL Slave Checks"
+  assign where match("mysql_health_slave_replication_lag*", service.check_command)
+}
