@@ -46,6 +46,7 @@ object Host "{{ inventory_hostname }}" {
     {% endfor %}
   {% endif %}
 
+  # Swap plugin
   {% if ansible_facts.swaptotal_mb is defined and ansible_facts.swaptotal_mb>0 %}
 
     vars.swap_enabled = true
@@ -53,6 +54,7 @@ object Host "{{ inventory_hostname }}" {
     vars.swap_enabled = false
   {% endif %}
 
+  # Load plugin
   {% if ansible_facts.processor_vcpus is defined %}
 
     vars.load_wload1 = {{ (ansible_facts.processor_vcpus * 1.5)|int }}
