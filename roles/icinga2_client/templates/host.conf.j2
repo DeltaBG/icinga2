@@ -93,4 +93,19 @@ object Host "{{ inventory_hostname }}" {
 
     {% endfor %}
   {% endif %}
+
+  # MySQL plugin
+  {% if ansible_facts.mysql is defined and ansible_facts.mysql|length>0 %}
+
+      {% if icinga2_mysql_monitoring_user is defined %}vars.mysql_username = "{{ icinga2_mysql_monitoring_user }}"
+      {% endif %}
+      vars.mysql_hostname = "localhost"
+      {% if icinga2_mysql_monitoring_password is defined %}vars.mysql_password = "{{ icinga2_mysql_monitoring_password }}"
+      {% endif %}
+      {% if icinga2_mysql_monitoring_user is defined %}vars.mysql_health_username = "{{ icinga2_mysql_monitoring_user }}"
+      {% endif %}
+      vars.mysql_health_hostname = "localhost"
+      {% if icinga2_mysql_monitoring_password is defined%}vars.mysql_health_password = "{{ icinga2_mysql_monitoring_password }}"
+      {% endif %}
+  {% endif %}
 }
