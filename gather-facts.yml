@@ -61,4 +61,9 @@
         (ansible_memory_mb is defined and 
         ansible_memory_mb.real.total|int > 0) and
         icinga2_plugin_autodetect
+    - set_fact:
+        plugin_cpu_autodetect_enabled: True
+      when: >
+        ansible_facts.processor_vcpus is defined and
+        icinga2_plugin_autodetect
   tags: always
