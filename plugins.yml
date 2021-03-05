@@ -1,0 +1,156 @@
+---
+
+- name: Install and configure plugins.
+  hosts: clients
+  gather_facts: no # Facts gathering has been already done in gather-facts.yml playbook.
+  serial: "{{ playbook_serial|default(0) }}"
+  tasks:
+    - block:
+        - include_role:
+            name: plugin_iostats
+          when: >
+            (plugin_iostats_autodetect_enabled and 
+            plugin_iostats_autodetect_enabled is defined) or
+            force_enable_plugin_iostats
+        - include_role:
+            name: plugin_disk
+          when: >
+            (plugin_disk_autodetect_enabled and 
+            plugin_disk_autodetect_enabled is defined) or
+            force_enable_plugin_disk
+        - include_role:
+            name: plugin_swap
+          when: >
+            (plugin_swap_autodetect_enabled and 
+            plugin_swap_autodetect_enabled is defined) or
+            force_enable_plugin_swap
+        - include_role:
+            name: plugin_smartctl
+          when: >
+            (plugin_load_autodetect_enabled and 
+            plugin_load_autodetect_enabled is defined) or
+            force_enable_plugin_smartctl
+        - include_role:
+            name: plugin_load
+          when: >
+            (plugin_load_autodetect_enabled and 
+            plugin_load_autodetect_enabled is defined) or
+            force_enable_plugin_load
+        - include_role:
+            name: plugin_raid
+          when: >
+            (plugin_raid_autodetect_enabled and 
+            plugin_raid_autodetect_enabled is defined) or
+            force_enable_plugin_load
+        - include_role:
+            name: plugin_rbl
+          when: >
+            (plugin_rbl_autodetect_enabled and 
+            plugin_rbl_autodetect_enabled is defined) or
+            force_enable_plugin_rbl
+        - include_role:
+            name: plugin_mysql
+          when: >
+            (plugin_mysql_autodetect_enabled and 
+            plugin_mysql_autodetect_enabled is defined) or
+            force_enable_plugin_mysql
+
+- name: Configure the master and clients according to client config.
+  hosts: 
+    - master
+    - clients
+  gather_facts: no # Facts gathering has been already done in gather-facts.yml playbook.
+  serial: "{{ playbook_serial|default(0) }}"
+  handlers:
+    - name: restart icinga2
+      service:
+        name: icinga2
+        state: restarted
+  tasks:
+    - block:
+        # Needed in some cases where conf.d is not included on some clients. 
+        - name: Ensure conf.d is included in main Icinga2 config.
+          lineinfile:
+            line: 'include_recursive "conf.d"'
+            dest: "{{ icinga2_config_dir }}/icinga2.conf"
+          notify: restart icinga2
+        - include_role:
+            name: plugin_iostats
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_iostats_autodetect_enabled and 
+            plugin_iostats_autodetect_enabled is defined) or
+            force_enable_plugin_iostats
+        - include_role:
+            name: plugin_disk
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_disk_autodetect_enabled and 
+            plugin_disk_autodetect_enabled is defined) or
+            force_enable_plugin_disk
+        - include_role:
+            name: plugin_swap
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_swap_autodetect_enabled and 
+            plugin_swap_autodetect_enabled is defined) or
+            force_enable_plugin_swap
+        - include_role:
+            name: plugin_smartctl
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_load_autodetect_enabled and 
+            plugin_load_autodetect_enabled is defined) or
+            force_enable_plugin_smartctl
+        - include_role:
+            name: plugin_load
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_load_autodetect_enabled and 
+            plugin_load_autodetect_enabled is defined) or
+            force_enable_plugin_load
+        - include_role:
+            name: plugin_raid
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_raid_autodetect_enabled and 
+            plugin_raid_autodetect_enabled is defined) or
+            force_enable_plugin_load
+        - include_role:
+            name: plugin_rbl
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_rbl_autodetect_enabled and 
+            plugin_rbl_autodetect_enabled is defined) or
+            force_enable_plugin_rbl
+        - include_role:
+            name: plugin_mysql
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_mysql_autodetect_enabled and 
+            plugin_mysql_autodetect_enabled is defined) or
+            force_enable_plugin_mysql

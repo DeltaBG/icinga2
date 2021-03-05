@@ -1,0 +1,64 @@
+---
+
+- name: Check if Icinga2 has been configured.
+  hosts: master
+  tasks:
+    - name: Check if {{ icinga2_config_dir }}/configured exists.
+      stat:
+        path: "{{ icinga2_config_dir }}/configured"
+      register: icinga2_config_chk
+      ignore_errors: yes
+    - set_fact: # noqa 502
+        icinga2_configured: True
+      when: icinga2_config_chk.stat.exists
+    - set_fact: # noqa 502
+        icinga2_configured: False
+      when: not icinga2_config_chk.stat.exists
+
+- name: Install and configure clients.
+  hosts: clients
+  serial: "{{ playbook_serial|default(0) }}"
+  tasks:
+    - name: Check if Icinga2 has been already installed.
+      stat:
+        path: "{{ icinga2_config_dir }}/installed"
+      register: icinga2_install_chk
+      ignore_errors: yes
+    - set_fact: # noqa 502
+        icinga2_installed: True
+      when: icinga2_install_chk.stat.exists
+    - set_fact: # noqa 502
+        icinga2_installed: False
+      when: not icinga2_install_chk.stat.exists
+    - block: # Initial agent installation and registration.
+        - include_role:
+            name: powertools-repo
+          when: >
+            ansible_os_family == "RedHat" and
+            ansible_distribution_major_version == "8"
+        - include_role:
+            name: icinga2_base
+        - include_role:
+            name: icinga2_agent
+        - include_role:
+            name: plugin-nagios_plugins_all
+        - name: Mark Icinga2 as installed
+          file:
+            path: "{{ icinga2_config_dir }}/installed"
+            mode: 000
+            state: touch
+      when: >
+        hostvars[groups['master'][0]]['icinga2_configured'] and
+        not icinga2_installed
+    - block: # Generate client configuration. Can be re-configured.
+        - include_role:
+            name: icinga2_client
+      when: hostvars[groups['master'][0]]['icinga2_configured']
+
+- name: Icinga2 post-config.
+  hosts: master
+  tasks:
+    - block:
+        - include_role:
+            name: icinga2_zones
+      when: icinga2_configured

@@ -1,0 +1,70 @@
+---
+
+- name: Configure and install the master host for the first time.
+  hosts: master
+  tasks:
+    - name: Check if Icinga2 has been already installed.
+      stat:
+        path: "{{ icinga2_config_dir }}/installed"
+      register: icinga2_install_chk
+      ignore_errors: yes
+    - set_fact: # noqa 502
+        icinga2_installed: True
+      when: icinga2_install_chk.stat.exists
+    - set_fact: # noqa 502
+        icinga2_installed: False
+      when: not icinga2_install_chk.stat.exists
+    - block:
+        - include_role:
+            name: selinux
+        - include_role:
+            name: mysql
+          when: not icinga2_external_mysql
+        - include_role:
+            name: icinga2_base
+        - include_role:
+            name: icinga2_features
+        - include_role:
+            name: httpd
+          when: install_httpd
+        - include_role: 
+            name: php
+          when: install_php
+        - include_role:
+            name: groups
+        - include_role:
+            name: users
+        - include_role:
+            name: graphite
+        - include_role:
+            name: icinga2_icingaweb
+          when: icinga2_enable_icingaweb
+        - include_role:
+            name: icinga2_initial_mysql_schema
+        - include_role:
+            name: powertools-repo
+          when: >
+            ansible_os_family == "RedHat" and
+            ansible_distribution_major_version == "8"
+        - include_role:
+            name: plugin-nagios_plugins_all
+        - name: Mark Icinga2 as installed
+          file:
+            path: "{{ icinga2_config_dir }}/installed"
+            mode: 000
+            state: touch
+        - include_role:
+            name: icinga2_setup_token
+        - debug:
+            msg: Please continue the setup via Icingaweb. When completed,
+              manually touch the emtpy file {{ icinga2_config_dir }}/configured
+              on the Icinga2 master host. If you do not do that, installation 
+              and registration of clients will not continue. After that is done, 
+              re-run this playbook.
+      when: not icinga2_installed
+      
+- import_playbook: gather-facts.yml
+
+- import_playbook: clients.yml
+
+- import_playbook: plugins.yml
