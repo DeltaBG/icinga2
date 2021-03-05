@@ -55,4 +55,10 @@
         (ansible_facts.mysql is defined and 
         ansible_facts.mysql|length>0) and
         icinga2_plugin_autodetect
+    - set_fact:
+        plugin_mem_autodetect_enabled: True
+      when: >
+        (ansible_memory_mb is defined and 
+        ansible_memory_mb.real.total|int > 0) and
+        icinga2_plugin_autodetect
   tags: always

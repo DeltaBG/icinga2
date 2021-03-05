@@ -54,6 +54,12 @@
             (plugin_mysql_autodetect_enabled and 
             plugin_mysql_autodetect_enabled is defined) or
             force_enable_plugin_mysql
+        - include_role:
+            name: plugin_mem
+          when: >
+            (plugin_mem_autodetect_enabled and 
+            plugin_mem_autodetect_enabled is defined) or
+            force_enable_plugin_mem
 
 - name: Configure the master and clients according to client config.
   hosts: 
@@ -154,3 +160,13 @@
             (plugin_mysql_autodetect_enabled and 
             plugin_mysql_autodetect_enabled is defined) or
             force_enable_plugin_mysql
+        - include_role:
+            name: plugin_mem
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (plugin_mem_autodetect_enabled and 
+            plugin_mem_autodetect_enabled is defined) or
+            force_enable_plugin_mem
