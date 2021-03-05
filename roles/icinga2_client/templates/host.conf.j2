@@ -115,4 +115,10 @@ object Host "{{ inventory_hostname }}" {
     vars.mem_crit = 95
     vars.mem_command = "memory"
   {% endif %}
+  # cpu plugin
+  {% if ansible_facts.processor_vcpus is defined %}
+    vars.cpu_warn = 85
+    vars.cpu_crit = 95
+    vars.cpu_command = "cpu"
+  {% endif %}
 }
