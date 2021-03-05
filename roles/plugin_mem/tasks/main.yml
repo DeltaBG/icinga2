@@ -30,9 +30,9 @@
     state: present
   when: not icinga2_check_check_mem_chk.stat.exists
 
-- name: Download the plugin.
-  get_url:
-    url: "{{ icinga2_check_mem_plugin_download_url }}"
+- name: Upload the plugin script.
+  copy:
+    src: check.py
     dest: "{{ icinga2_nagios_plugins_install_dir }}/"
     mode: 0755
   when: not icinga2_check_check_mem_chk.stat.exists
