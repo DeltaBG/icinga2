@@ -1,0 +1,4 @@
+object ServiceGroup "cpu_custom" {
+  display_name = "CPU Checks"
+  assign where match("cpu_custom*", service.check_command)
+}

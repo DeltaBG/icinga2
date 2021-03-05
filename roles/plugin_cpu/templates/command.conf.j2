@@ -1,0 +1,22 @@
+object CheckCommand "cpu_custom" {
+        command = [ PluginDir + "/check.py" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$cpu_warn$"
+                        description = "For cpu|memory|disk Percentage usage. For net number of dropped/error packets. Default 85."
+                }
+                "-c" = {
+                        value = "$cpu_crit$"
+                        description = "For cpu|memory|disk Percentage usage. For network number of dropped/error packets. Default 95."
+                }
+                "-C" = {
+                        value = "$cpu_command$"
+                        description = "Command <disk|cpu|memory|network> Default memory."
+                }
+        }
+
+        vars.cpu_warn = 85
+        vars.cpu_crit = 95
+        vars.cpu_command = "cpu"
+}
