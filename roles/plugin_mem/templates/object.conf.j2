@@ -1,0 +1,4 @@
+object ServiceGroup "mem_custom" {
+  display_name = "RAM Checks"
+  assign where match("mem_custom*", service.check_command)
+}

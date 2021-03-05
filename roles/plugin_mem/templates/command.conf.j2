@@ -1,0 +1,22 @@
+object CheckCommand "mem_custom" {
+        command = [ PluginDir + "/check.py" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$mem_warn$"
+                        description = "For cpu|memory|disk Percentage usage. For net number of dropped/error packets. Default 85."
+                }
+                "-c" = {
+                        value = "$mem_crit$"
+                        description = "For cpu|memory|disk Percentage usage. For network number of dropped/error packets. Default 95."
+                }
+                "-C" = {
+                        set_if = "$mem_command$"
+                        description = "Command <disk|cpu|memory|network> Default memory."
+                }
+        }
+
+        vars.mem_warn = 85
+        vars.mem_crit = 95
+        vars.mem_command = "memory"
+}

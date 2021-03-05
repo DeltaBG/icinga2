@@ -1,0 +1,38 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Check if check_mem plugin has been already installed.
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check.py"
+  register: icinga2_check_check_mem_chk
+
+- name: Ensure sysstat package is installed.
+  package:
+    name: sysstat
+    state: present
+  when: not icinga2_check_check_mem_chk.stat.exists
+
+- name: Ensure python3 is installed.
+  package:
+    name: python3
+    state: present
+  when: not icinga2_check_check_mem_chk.stat.exists
+
+- name: Ensure Python psutil is installed.
+  package:
+    name: python3-psutil
+    state: present
+  when: not icinga2_check_check_mem_chk.stat.exists
+
+- name: Download the plugin.
+  get_url:
+    url: "{{ icinga2_check_mem_plugin_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
+    mode: 0755
+  when: not icinga2_check_check_mem_chk.stat.exists
