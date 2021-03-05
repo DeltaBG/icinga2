@@ -16,13 +16,6 @@ object Host "{{ inventory_hostname }}" {
   vars.os = "{{ ansible_system }}"
   vars.os_family = "{{ ansible_distribution }}"
 
-  # Custom client vars. Should be defined only in host_vars.
-  {% if icinga2_custom_vars is defined %}
-  {{ icinga2_custom_vars }}
-  
-  {% endif %}
-  # End custom client vars.
-
   # IOstats plugin
   {% if ansible_devices.keys()|list is defined and ansible_devices.keys()|list|length>0 %}
     {% for disk in ansible_devices.keys()|list %}
@@ -121,4 +114,12 @@ object Host "{{ inventory_hostname }}" {
     vars.cpu_crit = 95
     vars.cpu_command = "cpu"
   {% endif %}
+
+  # Custom client vars. Should be defined only in host_vars.
+  # This block should sit below every other plugin blocks,
+  # otherwises the overriding will not work.
+  {% if icinga2_custom_vars is defined %}
+  {{ icinga2_custom_vars }}
+  {% endif %}
+  # End custom client vars.
 }
