@@ -24,4 +24,3 @@
     state: restarted
   delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
   when: client_config.changed
-  run_once: true
