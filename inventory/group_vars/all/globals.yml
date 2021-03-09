@@ -1,0 +1,92 @@
+---
+# Playbook serialization. Defaults to 0 which means all.
+#playbook_serial: "0"
+
+# Plugin autodetection. Defaults to True. If you do not want plugin autodetection on
+# monitored clients, you may override this var by setting it to False per-host basis
+# in host_vars.
+icinga2_plugin_autodetect: yes
+
+# Plugin configuration. These vars ideally should be placed individually in host_vars.
+# They are used for forcing enabling plugin and overriding autodetection.
+force_enable_plugin_iostats: no
+force_enable_plugin_disk: no
+force_enable_plugin_swap: no
+force_enable_plugin_smartctl: no
+force_enable_plugin_load: no
+force_enable_plugin_raid: no
+force_enable_plugin_rbl: no
+force_enable_plugin_mysql: no
+force_enable_plugin_mem: no
+force_enable_plugin_cpu: no
+force_enable_plugin_network: no
+
+# Whether you want to use the built-in role for installing MySQL. If set to False, 
+# site.yml will install MySQL 8.0 and create necessary databases and users for 
+# icinga2.
+icinga2_external_mysql: no
+mysql_database_host: localhost # If icinga2_external_mysql is True, set this var to your remote MySQL host.
+
+# MySQL specific vars. Configure them only when icinga2_external_mysql is set to false:
+mysql_root_password: 'changeme' # MySQL root password.
+mysql_enable_root_my_cnf: yes # Whether a /root/my.cnf is created and populated automatically. Defaults to yes.
+
+# Icinga2 user and group.
+icinga2_user: icinga
+icinga2_group: icinga
+
+# External/Internal MySQL variables. Configure them in both cases.
+# Icinga2 mysql specific vars.
+icinga2_mysql_user: icinga2_ido
+icinga2_mysql_user_password: 'changeme'
+icinga2_mysql_database_name: icinga2_ido
+
+# Icinga Web specific vars.
+icinga2_web_mysql_user: icinga2_web
+icinga2_web_mysql_user_password: 'changeme'
+icinga2_web_mysql_database_name: icinga2_web
+
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Additional Icinga2 features that we want to be enabled by default.
+icinga2_enabled_features:
+  - command
+  - ido-mysql
+  - syslog
+  - graphite
+  - api
+
+# API credentials used for authenticating Icinga2 agents to the master.
+icinga2_api_username: root
+icinga2_api_password: apipassword
+icinga2_api_port: 5665
+
+# Graphite configuration
+icinga2_graphite_install_dir: /opt/graphite
+icinga2_graphite_port: 8070
+
+# Icinga2 icingaweb config dir.
+icinga2_icingaweb_conf_dir: /etc/icingaweb2
+
+# Icinga2 icingaweb users and groups. Used in icingaweb and carbon.
+icinga2_icingaweb_user: apache
+icinga2_icingaweb_group: icingaweb2
+
+# MySQL charset connection exclusively for icingaweb.
+icinga2_icingaweb_mysql_charset: latin1
+
+# Whether to install Apache.
+install_httpd: yes
+
+# Whether to install PHP-FPM.
+install_php: yes
+
+# Whether to install icingaweb.
+icinga2_enable_icingaweb: yes
+
+# Configure icingaweb using this web server. Current option only supports 'apache'.
+icinga2_web_server: apache
+
+# Icingaweb URI.
+icinga2_icingaweb_uri: /icingaweb2
