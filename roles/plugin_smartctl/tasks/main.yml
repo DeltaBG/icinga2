@@ -41,6 +41,7 @@
        nagios ALL=(ALL) NOPASSWD: /usr/sbin/smartctl
     dest: /etc/sudoers.d/icinga
     validate: /usr/sbin/visudo -cf %s
+  when: not icinga2_check_smart_chk.stat.exists
 
 - name: Cleanup plugin archive.
   unarchive:
