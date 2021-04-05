@@ -34,6 +34,14 @@
     mode: 0755
   when: not icinga2_check_smart_chk.stat.exists
 
+- name: Set smartctl sudoers privileges.
+  copy:
+    content: |
+       icinga ALL=(ALL) NOPASSWD: /usr/sbin/smartctl
+       nagios ALL=(ALL) NOPASSWD: /usr/sbin/smartctl
+    dest: /etc/sudoers.d/icinga
+    validate: /usr/sbin/visudo -cf %s
+
 - name: Cleanup plugin archive.
   unarchive:
     src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
