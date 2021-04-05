@@ -66,6 +66,9 @@
             (plugin_cpu_autodetect_enabled and 
             plugin_cpu_autodetect_enabled is defined) or
             force_enable_plugin_cpu
+      when: >
+        hostvars[groups['master'][0]]['icinga2_configured'] and
+        icinga2_installed
 
 - name: Configure the master services and commands.
   hosts: master
@@ -178,6 +181,9 @@
             (plugin_cpu_autodetect_enabled and 
             plugin_cpu_autodetect_enabled is defined) or
             force_enable_plugin_cpu
+      when: >
+        hostvars[groups['master'][0]]['icinga2_configured'] and
+        icinga2_installed
 
 - name: Configure the clients commands.
   hosts: clients
@@ -286,3 +292,6 @@
             (plugin_cpu_autodetect_enabled and 
             plugin_cpu_autodetect_enabled is defined) or
             force_enable_plugin_cpu
+      when: >
+        hostvars[groups['master'][0]]['icinga2_configured'] and
+        icinga2_installed
