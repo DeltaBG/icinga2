@@ -1,0 +1,3 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2

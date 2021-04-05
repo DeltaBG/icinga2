@@ -1,0 +1,11 @@
+object CheckCommand "openstack_cinder-services" {
+        command = [ PluginDir + "/openstack_cinder-services" ]
+
+        arguments = {
+                "-r" = {
+                        value = "$r$"
+                        description = "Admin openrc file. Default ~/admin-openrc.sh"
+        }
+    }
+        vars.r = "~/admin-openrc.sh"
+}

@@ -66,6 +66,11 @@
             (plugin_cpu_autodetect_enabled and 
             plugin_cpu_autodetect_enabled is defined) or
             force_enable_plugin_cpu
+        - include_role:
+            name: plugin_openstack_cinder-services
+          when: >
+            (force_plugin_openstack_cinder_services is defined) or
+            force_plugin_openstack_cinder_services
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed
@@ -181,6 +186,12 @@
             (plugin_cpu_autodetect_enabled and 
             plugin_cpu_autodetect_enabled is defined) or
             force_enable_plugin_cpu
+        - include_role:
+            name: plugin_openstack_cinder-services
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed
@@ -292,6 +303,15 @@
             (plugin_cpu_autodetect_enabled and 
             plugin_cpu_autodetect_enabled is defined) or
             force_enable_plugin_cpu
+        - include_role:
+            name: plugin_openstack_cinder-services
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+          when: >
+            (force_plugin_openstack_cinder_services is defined) or
+            force_plugin_openstack_cinder_services
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+help () {
+    /bin/echo -e "\n\tThis plugin monitors if OpenStack Cinder service is up.\n"
+    exit -1
+}
+
+source_rc_file () {
+   source $1
+}
+
+# Getting parameters:
+while getopts "r:h" OPT; do
+    case $OPT in
+        "r") source_rc_file "$OPTARG";;
+        "h") help;;
+    esac
+done
+
+output=$(openstack volume service list | grep down)
+if [ $? -eq 0 ]; then
+    echo -n "CRITICAL - OpenStack Cinder services down: "
+    echo "${output}" | awk '{print $2,$4}' | while read LINE; do
+        echo -n "${LINE}; "
+    done
+    echo ""
+    exit 2
+else
+    echo "OK - All nodes up"
+    exit 0
+fi
