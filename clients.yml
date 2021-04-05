@@ -2,6 +2,7 @@
 
 - name: Check if Icinga2 has been configured.
   hosts: master
+  gather_facts: no
   tasks:
     - name: Check if {{ icinga2_config_dir }}/configured exists.
       stat:
@@ -17,6 +18,7 @@
 
 - name: Install and configure clients.
   hosts: clients
+  gather_facts: no
   serial: "{{ playbook_serial|default(0) }}"
   tasks:
     - name: Check if Icinga2 has been already installed.
@@ -57,6 +59,7 @@
 
 - name: Icinga2 post-config.
   hosts: master
+  gather_facts: no
   tasks:
     - block:
         - include_role:
