@@ -92,100 +92,60 @@
           loop:
             - services
             - commands
-          when: >
-            (plugin_iostats_autodetect_enabled and 
-            plugin_iostats_autodetect_enabled is defined) or
-            force_enable_plugin_iostats
         - include_role:
             name: plugin_disk
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_disk_autodetect_enabled and 
-            plugin_disk_autodetect_enabled is defined) or
-            force_enable_plugin_disk
         - include_role:
             name: plugin_swap
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_swap_autodetect_enabled and 
-            plugin_swap_autodetect_enabled is defined) or
-            force_enable_plugin_swap
         - include_role:
             name: plugin_smartctl
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_load_autodetect_enabled and 
-            plugin_load_autodetect_enabled is defined) or
-            force_enable_plugin_smartctl
         - include_role:
             name: plugin_load
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_load_autodetect_enabled and 
-            plugin_load_autodetect_enabled is defined) or
-            force_enable_plugin_load
         - include_role:
             name: plugin_raid
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_raid_autodetect_enabled and 
-            plugin_raid_autodetect_enabled is defined) or
-            force_enable_plugin_load
         - include_role:
             name: plugin_rbl
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_rbl_autodetect_enabled and 
-            plugin_rbl_autodetect_enabled is defined) or
-            force_enable_plugin_rbl
         - include_role:
             name: plugin_mysql
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_mysql_autodetect_enabled and 
-            plugin_mysql_autodetect_enabled is defined) or
-            force_enable_plugin_mysql
         - include_role:
             name: plugin_mem
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_mem_autodetect_enabled and 
-            plugin_mem_autodetect_enabled is defined) or
-            force_enable_plugin_mem
         - include_role:
             name: plugin_cpu
             tasks_from: "{{ item }}"
           loop:
             - services
             - commands
-          when: >
-            (plugin_cpu_autodetect_enabled and 
-            plugin_cpu_autodetect_enabled is defined) or
-            force_enable_plugin_cpu
         - include_role:
             name: plugin_openstack_cinder-services
             tasks_from: "{{ item }}"
