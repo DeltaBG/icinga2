@@ -66,4 +66,3 @@
       when: >
         ansible_facts.processor_vcpus is defined and
         icinga2_plugin_autodetect
-  tags: always
