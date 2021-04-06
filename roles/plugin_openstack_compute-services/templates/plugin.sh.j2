@@ -1,7 +1,7 @@
 #!/bin/bash
 
 help () {
-    /bin/echo -e "\n\tThis plugin monitors if OpenStack Cinder service is up.\n"
+    /bin/echo -e "\n\tThis plugin monitors if OpenStack Nova service is up.\n"
     exit -1
 }
 
@@ -19,7 +19,7 @@ done
 
 output=$(openstack volume compute list | grep down)
 if [ $? -eq 0 ]; then
-    echo -n "CRITICAL - OpenStack Cinder services down: "
+    echo -n "CRITICAL - OpenStack Nova services down: "
     echo "${output}" | awk '{print $2,$4}' | while read LINE; do
         echo -n "${LINE}; "
     done
