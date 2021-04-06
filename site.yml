@@ -1,5 +1,4 @@
 ---
-
 - name: Configure and install the master host for the first time.
   hosts: master
   tasks:
