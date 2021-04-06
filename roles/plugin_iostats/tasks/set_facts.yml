@@ -1,0 +1,8 @@
+---
+- set_fact:
+    "{{ ansible_role_name }}_enabled": yes
+  when: >
+    ((ansible_devices.keys()|list is defined and
+    ansible_devices.keys()|list|length>0) and
+    icinga2_plugin_autodetect) or
+    force_enable_plugin_iostats
