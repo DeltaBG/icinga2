@@ -97,6 +97,7 @@
           loop:
             - services
             - commands
+            - vars
         - include_role:
             name: plugin_disk
             tasks_from: "{{ item }}"
