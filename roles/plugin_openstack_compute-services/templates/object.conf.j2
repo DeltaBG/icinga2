@@ -1,0 +1,4 @@
+object ServiceGroup "OpenStack Compute Services" {
+  display_name = "Compute Services"
+  assign where match("check_openstack_compute-services", service.check_command)
+}
