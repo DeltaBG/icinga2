@@ -2,5 +2,8 @@
 # Icinga2 config directory.
 icinga2_config_dir: /etc/icinga2
 
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
 icinga2_check_iostats_download_url: "https://raw.githubusercontent.com/dnsmichi/icinga-plugins/master/scripts/check_iostats"
 icinga2_check_iostat_download_url: "https://raw.githubusercontent.com/dnsmichi/icinga-plugins/master/scripts/check_iostat"
