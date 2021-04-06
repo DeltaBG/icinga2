@@ -1,0 +1,11 @@
+object CheckCommand "check_openstack_network-services" {
+        command = [ PluginDir + "/check_openstack_network-services" ]
+
+        arguments = {
+                "-r" = {
+                        value = "$r$"
+                        description = "Admin openrc file. Default ~/admin-openrc.sh"
+        }
+    }
+        vars.r = "~/admin-openrc.sh"
+}

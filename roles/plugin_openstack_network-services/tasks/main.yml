@@ -1,0 +1,20 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Check if openstack_network-services plugin has been already installed.
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_openstack_network-services"
+  register: icinga2_openstack_network_services_chk
+
+- name: Upload the check_openstack_network-services plugin script.
+  template:
+    src: plugin.sh.j2
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_openstack_network-services"
+    mode: 0755
+  when: not icinga2_openstack_network_services_chk.stat.exists

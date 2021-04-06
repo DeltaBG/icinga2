@@ -1,0 +1,18 @@
+---
+- name: Configure Icinga2 service.
+  template:
+    src: service.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/service_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2
+
+- name: Configure Icinga2 service groups.
+  template:
+    src: object.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/group_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2

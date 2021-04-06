@@ -1,0 +1,4 @@
+object ServiceGroup "OpenStack Network Services" {
+  display_name = "Network Services"
+  assign where match("check_openstack_network-services", service.check_command)
+}

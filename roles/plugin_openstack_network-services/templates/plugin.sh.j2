@@ -1,0 +1,31 @@
+#!/bin/bash
+
+help () {
+    /bin/echo -e "\n\tThis plugin monitors if OpenStack Neutron service is up.\n"
+    exit -1
+}
+
+source_rc_file () {
+   source $1
+}
+
+# Getting parameters:
+while getopts "r:h" OPT; do
+    case $OPT in
+        "r") source_rc_file "$OPTARG";;
+        "h") help;;
+    esac
+done
+
+output=$(openstack network agent list | grep -i down)
+if [ $? -eq 0 ]; then
+    echo -n "CRITICAL - OpenStack Neutron services down: "
+    echo "${output}" | awk '{print $2,$4}' | while read LINE; do
+        echo -n "${LINE}; "
+    done
+    echo ""
+    exit 2
+else
+    echo "OK - All network agents are up"
+    exit 0
+fi
