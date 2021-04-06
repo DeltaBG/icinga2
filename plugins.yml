@@ -76,6 +76,11 @@
           when: >
             (force_plugin_openstack_cinder_services is defined) or
             force_plugin_openstack_cinder_services
+        - include_role:
+            name: plugin_openstack_compute-services
+          when: >
+            (force_plugin_openstack_compute_services is defined) or
+            force_plugin_openstack_compute_services
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed
@@ -159,6 +164,12 @@
             - commands
         - include_role:
             name: plugin_openstack_cinder-services
+            tasks_from: "{{ item }}"
+          loop:
+            - services
+            - commands
+        - include_role:
+            name: plugin_openstack_compute-services
             tasks_from: "{{ item }}"
           loop:
             - services
@@ -291,6 +302,15 @@
           when: >
             (force_plugin_openstack_cinder_services is defined) or
             force_plugin_openstack_cinder_services
+        - include_role:
+            name: plugin_openstack_compute-services
+            tasks_from: "{{ item }}"
+          loop:
+            - commands
+            - vars
+          when: >
+            (force_plugin_openstack_compute_services is defined) or
+            force_plugin_openstack_compute_services
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed
