@@ -6,86 +6,98 @@
   serial: "{{ playbook_serial|default(0) }}"
   tasks:
     - block:
-        - include_role:
-            name: plugin_iostats
+        - name: Include role task main
+          include_role:
+            name: "{{ plugin_main }}"
+            tasks_from: "main"
+          loop:
+            - plugin_iostats
+          loop_control:
+            loop_var: plugin_main
           when: >
-            (plugin_iostats_autodetect_enabled and 
-            plugin_iostats_autodetect_enabled is defined) or
-            force_enable_plugin_iostats
-        - include_role:
-            name: plugin_disk
-          when: >
-            (plugin_disk_autodetect_enabled and 
-            plugin_disk_autodetect_enabled is defined) or
-            force_enable_plugin_disk
-        - include_role:
-            name: plugin_swap
-          when: >
-            (plugin_swap_autodetect_enabled and 
-            plugin_swap_autodetect_enabled is defined) or
-            force_enable_plugin_swap
-        - include_role:
-            name: plugin_smartctl
-          when: >
-            (plugin_load_autodetect_enabled and 
-            plugin_load_autodetect_enabled is defined) or
-            force_enable_plugin_smartctl
-        - include_role:
-            name: plugin_load
-          when: >
-            (plugin_load_autodetect_enabled and 
-            plugin_load_autodetect_enabled is defined) or
-            force_enable_plugin_load
-        - include_role:
-            name: plugin_raid
-          when: >
-            (plugin_raid_autodetect_enabled and 
-            plugin_raid_autodetect_enabled is defined) or
-            force_enable_plugin_load
-        - include_role:
-            name: plugin_rbl
-          when: >
-            (plugin_rbl_autodetect_enabled and 
-            plugin_rbl_autodetect_enabled is defined) or
-            force_enable_plugin_rbl
-        - include_role:
-            name: plugin_mysql
-          when: >
-            (plugin_mysql_autodetect_enabled and 
-            plugin_mysql_autodetect_enabled is defined) or
-            force_enable_plugin_mysql
-        - include_role:
-            name: plugin_mem
-          when: >
-            (plugin_mem_autodetect_enabled and 
-            plugin_mem_autodetect_enabled is defined) or
-            force_enable_plugin_mem
-        - include_role:
-            name: plugin_cpu
-          when: >
-            (plugin_cpu_autodetect_enabled and 
-            plugin_cpu_autodetect_enabled is defined) or
-            force_enable_plugin_cpu
-        - include_role:
-            name: plugin_docker
-          when: >
-            (force_plugin_docker is defined) or
-            force_plugin_docker
-        - include_role:
-            name: plugin_openstack_cinder-services
-          when: >
-            (force_plugin_openstack_cinder_services is defined) or
-            force_plugin_openstack_cinder_services
-        - include_role:
-            name: plugin_openstack_compute-services
-          when: >
-            (force_plugin_openstack_compute_services is defined) or
-            force_plugin_openstack_compute_services
-        - include_role:
-            name: plugin_openstack_network-services
-          when: >
-            (force_plugin_openstack_network_services is defined) or
-            force_plugin_openstack_network_services
+            (plugin_main + '_enabled') is defined and
+            plugin_main + '_enabled'
+
+        # - include_role:
+        #     name: plugin_iostats
+        #   when: >
+        #     (plugin_iostats_autodetect_enabled and 
+        #     plugin_iostats_autodetect_enabled is defined) or
+        #     force_enable_plugin_iostats
+        # - include_role:
+        #     name: plugin_disk
+        #   when: >
+        #     (plugin_disk_autodetect_enabled and 
+        #     plugin_disk_autodetect_enabled is defined) or
+        #     force_enable_plugin_disk
+        # - include_role:
+        #     name: plugin_swap
+        #   when: >
+        #     (plugin_swap_autodetect_enabled and 
+        #     plugin_swap_autodetect_enabled is defined) or
+        #     force_enable_plugin_swap
+        # - include_role:
+        #     name: plugin_smartctl
+        #   when: >
+        #     (plugin_load_autodetect_enabled and 
+        #     plugin_load_autodetect_enabled is defined) or
+        #     force_enable_plugin_smartctl
+        # - include_role:
+        #     name: plugin_load
+        #   when: >
+        #     (plugin_load_autodetect_enabled and 
+        #     plugin_load_autodetect_enabled is defined) or
+        #     force_enable_plugin_load
+        # - include_role:
+        #     name: plugin_raid
+        #   when: >
+        #     (plugin_raid_autodetect_enabled and 
+        #     plugin_raid_autodetect_enabled is defined) or
+        #     force_enable_plugin_load
+        # - include_role:
+        #     name: plugin_rbl
+        #   when: >
+        #     (plugin_rbl_autodetect_enabled and 
+        #     plugin_rbl_autodetect_enabled is defined) or
+        #     force_enable_plugin_rbl
+        # - include_role:
+        #     name: plugin_mysql
+        #   when: >
+        #     (plugin_mysql_autodetect_enabled and 
+        #     plugin_mysql_autodetect_enabled is defined) or
+        #     force_enable_plugin_mysql
+        # - include_role:
+        #     name: plugin_mem
+        #   when: >
+        #     (plugin_mem_autodetect_enabled and 
+        #     plugin_mem_autodetect_enabled is defined) or
+        #     force_enable_plugin_mem
+        # - include_role:
+        #     name: plugin_cpu
+        #   when: >
+        #     (plugin_cpu_autodetect_enabled and 
+        #     plugin_cpu_autodetect_enabled is defined) or
+        #     force_enable_plugin_cpu
+        # - include_role:
+        #     name: plugin_docker
+        #   when: >
+        #     (force_plugin_docker is defined) or
+        #     force_plugin_docker
+        # - include_role:
+        #     name: plugin_openstack_cinder-services
+        #   when: >
+        #     (force_plugin_openstack_cinder_services is defined) or
+        #     force_plugin_openstack_cinder_services
+        # - include_role:
+        #     name: plugin_openstack_compute-services
+        #   when: >
+        #     (force_plugin_openstack_compute_services is defined) or
+        #     force_plugin_openstack_compute_services
+        # - include_role:
+        #     name: plugin_openstack_network-services
+        #   when: >
+        #     (force_plugin_openstack_network_services is defined) or
+        #     force_plugin_openstack_network_services
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed
@@ -101,90 +113,105 @@
         state: restarted
   tasks:
     - block:
-        - include_role:
-            name: plugin_iostats
-            tasks_from: "{{ item }}"
+        - name: Include role task master services
+          include_role:
+            name: "{{ item }}"
+            tasks_from: "services"
           loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_disk
-            tasks_from: "{{ item }}"
+            - plugin_iostats
+        - name: Include role task master commands
+          include_role:
+            name: "{{ item }}"
+            tasks_from: "commands"
           loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_swap
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_smartctl
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_load
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_raid
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_rbl
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_mysql
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_mem
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_cpu
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_docker
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_openstack_cinder-services
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_openstack_compute-services
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
-        - include_role:
-            name: plugin_openstack_network-services
-            tasks_from: "{{ item }}"
-          loop:
-            - services
-            - commands
+            - plugin_iostats
+
+
+
+        # - include_role:
+        #     name: plugin_iostats
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_disk
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_swap
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_smartctl
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_load
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_raid
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_rbl
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_mysql
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_mem
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_cpu
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_docker
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_openstack_cinder-services
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_openstack_compute-services
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
+        # - include_role:
+        #     name: plugin_openstack_network-services
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - services
+        #     - commands
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed
@@ -206,133 +233,157 @@
             line: 'include_recursive "conf.d"'
             dest: "{{ icinga2_config_dir }}/icinga2.conf"
           notify: restart icinga2
-        - include_role:
-            name: plugin_iostats
-            tasks_from: "{{ item }}"
+        - name: Include role task client commands
+          include_role:
+            name: "{{ plugin_commands }}"
+            tasks_from: "commands"
           loop:
-            - commands
-            - vars
+            - plugin_iostats
+          loop_control:
+            loop_var: plugin_commands
           when: >
-            (plugin_iostats_autodetect_enabled and 
-            plugin_iostats_autodetect_enabled is defined) or
-            force_enable_plugin_iostats
-        - include_role:
-            name: plugin_disk
-            tasks_from: "{{ item }}"
+            (plugin_commands + '_enabled') is defined and
+            plugin_commands + '_enabled'
+        - name: Include role task client vars
+          include_role:
+            name: "{{ plugin_vars }}"
+            tasks_from: "vars"
           loop:
-            - commands
+            - plugin_iostats
+          loop_control:
+            loop_var: plugin_vars
           when: >
-            (plugin_disk_autodetect_enabled and 
-            plugin_disk_autodetect_enabled is defined) or
-            force_enable_plugin_disk
-        - include_role:
-            name: plugin_swap
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_swap_autodetect_enabled and 
-            plugin_swap_autodetect_enabled is defined) or
-            force_enable_plugin_swap
-        - include_role:
-            name: plugin_smartctl
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_load_autodetect_enabled and 
-            plugin_load_autodetect_enabled is defined) or
-            force_enable_plugin_smartctl
-        - include_role:
-            name: plugin_load
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_load_autodetect_enabled and 
-            plugin_load_autodetect_enabled is defined) or
-            force_enable_plugin_load
-        - include_role:
-            name: plugin_raid
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_raid_autodetect_enabled and 
-            plugin_raid_autodetect_enabled is defined) or
-            force_enable_plugin_load
-        - include_role:
-            name: plugin_rbl
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_rbl_autodetect_enabled and 
-            plugin_rbl_autodetect_enabled is defined) or
-            force_enable_plugin_rbl
-        - include_role:
-            name: plugin_mysql
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_mysql_autodetect_enabled and 
-            plugin_mysql_autodetect_enabled is defined) or
-            force_enable_plugin_mysql
-        - include_role:
-            name: plugin_mem
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_mem_autodetect_enabled and 
-            plugin_mem_autodetect_enabled is defined) or
-            force_enable_plugin_mem
-        - include_role:
-            name: plugin_cpu
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-          when: >
-            (plugin_cpu_autodetect_enabled and 
-            plugin_cpu_autodetect_enabled is defined) or
-            force_enable_plugin_cpu
-        - include_role:
-            name: plugin_docker
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-            - vars
-          when: >
-            (force_plugin_docker is defined) or
-            force_plugin_docker
-        - include_role:
-            name: plugin_openstack_cinder-services
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-            - vars
-          when: >
-            (force_plugin_openstack_cinder_services is defined) or
-            force_plugin_openstack_cinder_services
-        - include_role:
-            name: plugin_openstack_compute-services
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-            - vars
-          when: >
-            (force_plugin_openstack_compute_services is defined) or
-            force_plugin_openstack_compute_services
-        - include_role:
-            name: plugin_openstack_network-services
-            tasks_from: "{{ item }}"
-          loop:
-            - commands
-            - vars
-          when: >
-            (force_plugin_openstack_network_services is defined) or
-            force_plugin_openstack_network_services
+            (plugin_vars + '_enabled') is defined and
+            plugin_vars + '_enabled'
+
+
+        # - include_role:
+        #     name: plugin_iostats
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #     - vars
+        #   when: >
+        #     (plugin_iostats_autodetect_enabled and 
+        #     plugin_iostats_autodetect_enabled is defined) or
+        #     force_enable_plugin_iostats
+        # - include_role:
+        #     name: plugin_disk
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_disk_autodetect_enabled and 
+        #     plugin_disk_autodetect_enabled is defined) or
+        #     force_enable_plugin_disk
+        # - include_role:
+        #     name: plugin_swap
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_swap_autodetect_enabled and 
+        #     plugin_swap_autodetect_enabled is defined) or
+        #     force_enable_plugin_swap
+        # - include_role:
+        #     name: plugin_smartctl
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_load_autodetect_enabled and 
+        #     plugin_load_autodetect_enabled is defined) or
+        #     force_enable_plugin_smartctl
+        # - include_role:
+        #     name: plugin_load
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_load_autodetect_enabled and 
+        #     plugin_load_autodetect_enabled is defined) or
+        #     force_enable_plugin_load
+        # - include_role:
+        #     name: plugin_raid
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_raid_autodetect_enabled and 
+        #     plugin_raid_autodetect_enabled is defined) or
+        #     force_enable_plugin_load
+        # - include_role:
+        #     name: plugin_rbl
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_rbl_autodetect_enabled and 
+        #     plugin_rbl_autodetect_enabled is defined) or
+        #     force_enable_plugin_rbl
+        # - include_role:
+        #     name: plugin_mysql
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_mysql_autodetect_enabled and 
+        #     plugin_mysql_autodetect_enabled is defined) or
+        #     force_enable_plugin_mysql
+        # - include_role:
+        #     name: plugin_mem
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_mem_autodetect_enabled and 
+        #     plugin_mem_autodetect_enabled is defined) or
+        #     force_enable_plugin_mem
+        # - include_role:
+        #     name: plugin_cpu
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #   when: >
+        #     (plugin_cpu_autodetect_enabled and 
+        #     plugin_cpu_autodetect_enabled is defined) or
+        #     force_enable_plugin_cpu
+        # - include_role:
+        #     name: plugin_docker
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #     - vars
+        #   when: >
+        #     (force_plugin_docker is defined) or
+        #     force_plugin_docker
+        # - include_role:
+        #     name: plugin_openstack_cinder-services
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #     - vars
+        #   when: >
+        #     (force_plugin_openstack_cinder_services is defined) or
+        #     force_plugin_openstack_cinder_services
+        # - include_role:
+        #     name: plugin_openstack_compute-services
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #     - vars
+        #   when: >
+        #     (force_plugin_openstack_compute_services is defined) or
+        #     force_plugin_openstack_compute_services
+        # - include_role:
+        #     name: plugin_openstack_network-services
+        #     tasks_from: "{{ item }}"
+        #   loop:
+        #     - commands
+        #     - vars
+        #   when: >
+        #     (force_plugin_openstack_network_services is defined) or
+        #     force_plugin_openstack_network_services
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         icinga2_installed

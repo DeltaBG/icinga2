@@ -15,8 +15,8 @@
     - set_fact:
         icinga2_plugins: "{{ icinga2_plugins | default([]) + [ item.path | basename ] }}"
       loop: "{{ find_plugins.files }}"
-    - debug:
-        var: icinga2_plugins
+    # - debug:
+    #     var: icinga2_plugins
 
 - name: Gather facts for all hosts and set facts for autodetection.
   hosts:
@@ -27,61 +27,68 @@
   tasks:
     - name: Gather extended facts.
       deltabg.extended_facts.extended_facts:
-    - set_fact:
-        plugin_iostats_autodetect_enabled: True
-      when: >
-        (ansible_devices.keys()|list is defined and
-        ansible_devices.keys()|list|length>0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_disk_autodetect_enabled: True
-      when: >
-        (ansible_facts.mounts is defined 
-        and ansible_facts.mounts|length>0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_swap_autodetect_enabled: True
-      when: >
-        (ansible_facts.swaptotal_mb is defined 
-        and ansible_facts.swaptotal_mb>0) and 
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_load_autodetect_enabled: True
-      when: >
-        ansible_facts.processor_vcpus is defined and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_smartctl_autodetect_enabled: True
-      when: >
-        (ansible_facts.smartctl is defined and
-        ansible_facts.smartctl|length>0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_raid_autodetect_enabled: True
-      when: >
-        (ansible_facts.raid is defined and 
-        ansible_facts.raid|length>0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_rbl_autodetect_enabled: True
-      when: >
-        (ansible_facts.all_ipv4_addresses is defined and 
-        ansible_facts.all_ipv4_addresses|length>0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_mysql_autodetect_enabled: True
-      when: >
-        (ansible_facts.mysql is defined and 
-        ansible_facts.mysql|length>0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_mem_autodetect_enabled: True
-      when: >
-        (ansible_memory_mb is defined and 
-        ansible_memory_mb.real.total|int > 0) and
-        icinga2_plugin_autodetect
-    - set_fact:
-        plugin_cpu_autodetect_enabled: True
-      when: >
-        ansible_facts.processor_vcpus is defined and
-        icinga2_plugin_autodetect
+    - name: Include role task set_facts
+      include_role:
+        name: "{{ item }}"
+        tasks_from: "set_facts"
+      loop:
+        - plugin_iostats
+
+    # - set_fact:
+    #     plugin_iostats_autodetect_enabled: True
+    #   when: >
+    #     (ansible_devices.keys()|list is defined and
+    #     ansible_devices.keys()|list|length>0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_disk_autodetect_enabled: True
+    #   when: >
+    #     (ansible_facts.mounts is defined 
+    #     and ansible_facts.mounts|length>0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_swap_autodetect_enabled: True
+    #   when: >
+    #     (ansible_facts.swaptotal_mb is defined 
+    #     and ansible_facts.swaptotal_mb>0) and 
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_load_autodetect_enabled: True
+    #   when: >
+    #     ansible_facts.processor_vcpus is defined and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_smartctl_autodetect_enabled: True
+    #   when: >
+    #     (ansible_facts.smartctl is defined and
+    #     ansible_facts.smartctl|length>0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_raid_autodetect_enabled: True
+    #   when: >
+    #     (ansible_facts.raid is defined and 
+    #     ansible_facts.raid|length>0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_rbl_autodetect_enabled: True
+    #   when: >
+    #     (ansible_facts.all_ipv4_addresses is defined and 
+    #     ansible_facts.all_ipv4_addresses|length>0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_mysql_autodetect_enabled: True
+    #   when: >
+    #     (ansible_facts.mysql is defined and 
+    #     ansible_facts.mysql|length>0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_mem_autodetect_enabled: True
+    #   when: >
+    #     (ansible_memory_mb is defined and 
+    #     ansible_memory_mb.real.total|int > 0) and
+    #     icinga2_plugin_autodetect
+    # - set_fact:
+    #     plugin_cpu_autodetect_enabled: True
+    #   when: >
+    #     ansible_facts.processor_vcpus is defined and
+    #     icinga2_plugin_autodetect
