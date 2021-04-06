@@ -9,12 +9,12 @@
 
 - name: Check if openstack_cinder-services plugin has been already installed.
   stat:
-    path: "{{ icinga2_nagios_plugins_install_dir }}/openstack_cinder-services"
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_openstack_cinder-services"
   register: icinga2_openstack_cinder_services_chk
 
 - name: Upload the plugin script.
   template:
     src: plugin.sh.j2
-    dest: "{{ icinga2_nagios_plugins_install_dir }}/openstack_cinder-services"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_openstack_cinder-services"
     mode: 0755
   when: not icinga2_openstack_cinder_services_chk.stat.exists

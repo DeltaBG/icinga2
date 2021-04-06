@@ -1,4 +1,4 @@
-object ServiceGroup "Cinder Services" {
+object ServiceGroup "OpenStack Cinder Services" {
   display_name = "Cinder Services"
-  assign where match("openstack_cinder-services", service.check_command)
+  assign where match("check_openstack_cinder-services", service.check_command)
 }

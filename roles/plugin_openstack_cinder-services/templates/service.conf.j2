@@ -17,9 +17,9 @@
  * own description, e.g. "{{ inventory_hostname }}".
  */
 
-apply Service "Cinder Services" {
+apply Service "OpenStack Cinder Services" {
   import "generic-service"
-  check_command = "openstack_cinder-services"
+  check_command = "check_openstack_cinder-services"
   command_endpoint = host.vars.agent_endpoint
   assign where host.vars.cinder == true
 }
