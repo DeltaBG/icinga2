@@ -1,7 +1,7 @@
 object CheckCommand "smart_pl" {
   // Plugin name without 'check_' prefix
 
-  command = [ PluginDir + "/check_smart" ]
+  command = [ "sudo", PluginDir + "/check_smart" ]
   
   arguments = {
     "-d" = {
