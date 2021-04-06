@@ -1,4 +1,23 @@
 ---
+- name: Gather facts for localhost
+  hosts: localhost
+  gather_facts: false
+  become: no
+  tasks:
+    - name: Find icinga2 plugins
+      find:
+        paths: "{{ playbook_dir }}/roles"
+        recurse: no
+        file_type: directory
+        patterns: "plugin_*"
+      delegate_to: localhost
+      register: find_plugins
+    - set_fact:
+        icinga2_plugins: "{{ icinga2_plugins | default([]) + [ item.path | basename ] }}"
+      loop: "{{ find_plugins.files }}"
+    - debug:
+        var: icinga2_plugins
+
 - name: Gather facts for all hosts and set facts for autodetection.
   hosts:
     - clients
