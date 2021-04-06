@@ -291,6 +291,7 @@
             tasks_from: "{{ item }}"
           loop:
             - commands
+            - vars
           when: >
             (force_plugin_docker is defined) or
             force_plugin_docker
