@@ -55,6 +55,8 @@
     path: /etc/sudoers.d/icinga
     validate: /usr/sbin/visudo -cf %s
   loop:
-   - "icinga ALL=(ALL) NOPASSWD: /usr/sbin/smartctl"
-   - "docker ALL=(ALL) NOPASSWD: /usr/sbin/smartctl"
+    - "icinga ALL=(ALL) NOPASSWD: /usr/lib/nagios/plugins/check_smart"
+    - "nagios ALL=(ALL) NOPASSWD: /usr/lib/nagios/plugins/check_smart"
+    - "icinga ALL=(ALL) NOPASSWD: /usr/sbin/smartctl"
+    - "nagios ALL=(ALL) NOPASSWD: /usr/sbin/smartctl"
   # when: not icinga2_check_smart_chk.stat.exists
