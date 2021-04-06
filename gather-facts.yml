@@ -7,7 +7,7 @@
   gather_facts: True
   tasks:
     - name: Gather extended facts.
-      mlg1.extended_facts.extended_facts:
+      deltabg.extended_facts.extended_facts:
     - set_fact:
         plugin_iostats_autodetect_enabled: True
       when: >
