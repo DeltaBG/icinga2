@@ -16,17 +16,8 @@ object Host "{{ inventory_hostname }}" {
   vars.os = "{{ ansible_system }}"
   vars.os_family = "{{ ansible_distribution }}"
 
-  # IOstats plugin
-  {% if ansible_devices.keys()|list is defined and ansible_devices.keys()|list|length>0 %}
-    {% for disk in ansible_devices.keys()|list %}
-      {% if "sr" not in disk %}
-
-          vars.iostats_disks["iostat on {{ disk }}"] = {
-            iostats_disk = "{{ disk }}"
-        }
-      {% endif %}     
-    {% endfor %}
-  {% endif %}
+  # Include plugin vars
+  include_recursive "{{ inventory_hostname }}", "*.conf"
 
   # Disks plugin
   {% if ansible_facts.mounts is defined and ansible_facts.mounts|length>0 %}

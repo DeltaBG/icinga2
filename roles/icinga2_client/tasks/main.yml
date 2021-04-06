@@ -18,9 +18,19 @@
   delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
   register: client_config
 
+- name: Create dir for plugin vars
+  file:
+    path: "{{ icinga2_config_dir }}/zones.d/{{ icinga2_zone_master_endpoint_name }}/{{ inventory_hostname }}"
+    state: directory
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0755
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+  register: client_dir
+
 - name: Restart master icinga2 service.
   service:
     name: icinga2
     state: restarted
   delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
-  when: client_config.changed
+  when: client_config.changed or client_dir.changed
