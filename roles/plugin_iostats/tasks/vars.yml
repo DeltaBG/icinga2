@@ -1,0 +1,10 @@
+---
+- name: Configure the client plugin vars.
+  template:
+    src: vars.conf.j2
+    dest: "{{ icinga2_config_dir }}/zones.d/{{ icinga2_zone_master_endpoint_name }}/{{ hostvars[item]['inventory_hostname'] }}/{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2
+  loop: "{{ groups['clients'] }}"
