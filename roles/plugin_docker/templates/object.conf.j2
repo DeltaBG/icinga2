@@ -1,0 +1,4 @@
+object ServiceGroup "docker_custom" {
+  display_name = "Docker Checks"
+  assign where match("docker_custom", service.check_command)
+}

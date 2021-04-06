@@ -1,0 +1,14 @@
+object CheckCommand "docker_custom" {
+        command = [ "sudo", PluginDir + "/check_docker" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$docker_warn$"
+                        description = "warning percentage (default 50)."
+                }
+                "-c" = {
+                        value = "$docker_crit$"
+                        description = "critcal percentage (default 80)"
+                }
+        }
+}
