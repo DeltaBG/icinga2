@@ -97,7 +97,6 @@
           loop:
             - services
             - commands
-            - vars
         - include_role:
             name: plugin_disk
             tasks_from: "{{ item }}"
@@ -190,6 +189,7 @@
             tasks_from: "{{ item }}"
           loop:
             - commands
+            - vars
           when: >
             (plugin_iostats_autodetect_enabled and 
             plugin_iostats_autodetect_enabled is defined) or
