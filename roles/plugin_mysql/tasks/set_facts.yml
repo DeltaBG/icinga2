@@ -1,0 +1,8 @@
+---
+- set_fact:
+    enable_plugins: "{{ enable_plugins | default([]) + [ ansible_role_name ] }}"
+  when: >
+    ((ansible_facts.mysql is defined and 
+    ansible_facts.mysql|length>0) and
+    icinga2_plugin_autodetect) or
+    force_enable_plugin_mysql
