@@ -1,0 +1,4 @@
+object ServiceGroup "Ceph RGW status" {
+  display_name = "Ceph RGW status"
+  assign where match("check_ceph_rgw", service.check_command)
+}

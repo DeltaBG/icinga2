@@ -1,0 +1,10 @@
+object CheckCommand "check_ceph_rgw" {
+    command = [ "sudo", PluginDir + "/check_ceph_rgw" ]
+
+    arguments = {
+        "-n" = {
+            value = "$ceph_rgw_name$"
+            description = "ceph client name."
+        }
+    }
+}
