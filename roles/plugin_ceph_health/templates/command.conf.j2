@@ -1,0 +1,10 @@
+object CheckCommand "check_ceph_health" {
+    command = [ "sudo", PluginDir + "/check_ceph_health" ]
+
+    arguments = {
+        "-w" = {
+            value = "$ceph_health_whitelist$"
+            description = "whitelist regexp for ceph health warnings."
+        }
+    }
+}
