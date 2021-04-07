@@ -1,0 +1,11 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+icinga2_zone_master_endpoint_name: master
+
+icinga2_ceph_osd_version: HEAD
+icinga2_ceph_osd_download_url: https://github.com/ceph/ceph-nagios-plugins.git
+
+icinga2_ceph_osd_python_dependecies:
+  - requests

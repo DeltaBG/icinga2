@@ -1,0 +1,13 @@
+object CheckCommand "check_ceph_osd" {
+    command = [ "sudo", PluginDir + "/check_ceph_osd" ]
+
+    arguments = {
+        "-H" = {
+            value = "$ceph_osd_host$"
+            description = "osd host."
+        }
+    }
+    
+    {% if 'master' not in group_names %}vars.ceph_osd_host = "{{ inventory_hostname }}"
+    {% endif %}
+}
