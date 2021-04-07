@@ -1,0 +1,5 @@
+# RAID plugin
+{% if ansible_facts.raid is defined and ansible_facts.raid|length>0 %}
+vars.raid_enabled = true
+{% endif %}
+# EOF RAID plugin
