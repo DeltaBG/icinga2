@@ -1,3 +1,6 @@
 ---
 # Icinga2 config directory.
 icinga2_config_dir: /etc/icinga2
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"

@@ -1,0 +1,7 @@
+# cpu plugin
+{% if ansible_facts.processor_vcpus is defined %}
+vars.cpu_warn = 85
+vars.cpu_crit = 95
+vars.cpu_command = "cpu"
+{% endif %}
+# EOF cpu plugin
