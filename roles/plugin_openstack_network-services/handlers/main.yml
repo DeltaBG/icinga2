@@ -3,3 +3,10 @@
   service:
     name: icinga2
     state: restarted
+
+- name: restart icinga2 master
+  service:
+    name: icinga2
+    state: restarted
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+  run_once: yes
