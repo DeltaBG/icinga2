@@ -1,0 +1,6 @@
+---
+- set_fact:
+    enable_plugins: "{{ enable_plugins | default([]) + [ ansible_role_name ] }}"
+  when: >
+    (force_plugin_ceph_osd_df is defined) or
+    force_plugin_ceph_osd_df

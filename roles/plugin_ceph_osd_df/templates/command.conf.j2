@@ -1,0 +1,17 @@
+object CheckCommand "check_ceph_osd_df" {
+    command = [ "sudo", PluginDir + "/check_ceph_osd_df" ]
+
+    arguments = {
+        "-W" = {
+            value = "$ceph_osd_df_warn$"
+            description = "warn above this percent RAW USED."
+        }
+        "-C" = {
+            value = "$ceph_osd_df_crit$"
+            description = "crit above this percent RAW USED."
+        }
+    }
+    
+    vars.ceph_osd_df_warn = 80
+    vars.ceph_osd_df_crit = 90
+}
