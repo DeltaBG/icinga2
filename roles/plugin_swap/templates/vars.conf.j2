@@ -1,0 +1,7 @@
+# Swap plugin
+{% if ansible_facts.swaptotal_mb is defined and ansible_facts.swaptotal_mb>0 %}
+vars.swap_enabled = true
+{% else %}
+vars.swap_enabled = false
+{% endif %}
+# EOF Swap plugin
