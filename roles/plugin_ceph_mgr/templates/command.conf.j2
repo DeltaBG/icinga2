@@ -1,0 +1,10 @@
+object CheckCommand "check_ceph_mgr" {
+    command = [ "sudo", PluginDir + "/check_ceph_mgr" ]
+
+    arguments = {
+        "-n" = {
+            value = "$ceph_mgr_client_name$"
+            description = "ceph client name."
+        }
+    }
+}
