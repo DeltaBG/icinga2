@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    "{{ ansible_role_name }}_enabled": yes
+    enable_plugins: "{{ enable_plugins | default([]) + [ ansible_role_name ] }}"
   when: >
     ((ansible_devices.keys()|list is defined and
     ansible_devices.keys()|list|length>0) and
