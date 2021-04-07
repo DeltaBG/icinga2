@@ -1,0 +1,80 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Check if ceph_rgw_api plugin has been already installed.
+  stat:
+    path: "{{ icinga2_nagios_plugins_install_dir }}/check_ceph_rgw_api"
+  register: icinga2_ceph_rgw_api_chk
+
+- name: Install Python2.
+  package:
+    name: python2
+    state: present
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Get get-pip.py.
+  get_url:
+    url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
+    dest: /tmp/
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Install Python2 pip.
+  shell: python2 /tmp/get-pip.py
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Install Python2 dependencies.
+  pip:
+    name: "{{ icinga2_ceph_rgw_api_python_dependecies }}"
+    executable: pip2
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Create temporary download directory.
+  file:
+    path: /tmp/check_ceph_rgw_api/
+    state: directory
+    mode: 0755
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Download the ceph_rgw_api plugin source.
+  git:
+    repo: "{{ icinga2_ceph_rgw_api_download_url }}"
+    version: "{{ icinga2_ceph_rgw_api_version }}"
+    dest: /tmp/check_ceph_rgw_api/
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Replace Python2 executable in the script.
+  lineinfile:
+    path: /tmp/check_ceph_rgw_api/src/check_ceph_rgw_api
+    regexp: "#!\/usr\/bin\/env python.?"
+    line: "#!/usr/bin/env /usr/bin/python2"
+    mode: 0755
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Copy the ceph_rgw_api plugin to final destination.
+  copy:
+    src: /tmp/check_ceph_rgw_api/src/check_ceph_rgw_api
+    remote_src: yes
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_ceph_rgw_api"
+    mode: 0755
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Create initial sudoers file.
+  file:
+    path: /etc/sudoers.d/icinga
+    state: touch
+    mode: 0600
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
+
+- name: Set ceph_rgw_api sudoers privileges.
+  lineinfile:
+    line: "{{ icinga2_user }} ALL=(ALL) NOPASSWD: {{ icinga2_nagios_plugins_install_dir }}/check_ceph_rgw_api"
+    path: /etc/sudoers.d/icinga
+    validate: /usr/sbin/visudo -cf %s
+    mode: 0600
+  when: not icinga2_ceph_rgw_api_chk.stat.exists
