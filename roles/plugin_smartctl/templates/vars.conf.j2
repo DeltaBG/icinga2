@@ -1,0 +1,10 @@
+# Smartctl plugin
+{% if ansible_facts.smartctl is defined and ansible_facts.smartctl|length>0 %}
+{% for device in ansible_facts.smartctl.devices %}
+vars.smart_devices["smart_device {{ device.name }}"] = {
+  smart_disk = "{{ device.device }}"
+  smart_type = "{{ device.type }}"
+}
+{% endfor %}
+{% endif %}
+# EOF Smartctl plugin
