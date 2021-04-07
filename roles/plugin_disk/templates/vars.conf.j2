@@ -1,0 +1,11 @@
+# Disks plugin
+{% if ansible_facts.mounts is defined and ansible_facts.mounts|length>0 %}
+{% for mount in ansible_facts.mounts %}
+{% if 'snap' not in mount.mount %}
+vars.disk_service["disk {{ mount.mount }}"] = {
+  disk_partitions = "{{ mount.mount }}"
+}
+{% endif %}
+{% endfor %}
+{% endif %}
+# EOF Disks plugin
