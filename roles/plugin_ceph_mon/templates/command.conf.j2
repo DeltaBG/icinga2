@@ -1,0 +1,13 @@
+object CheckCommand "check_ceph_mon" {
+    command = [ "sudo", PluginDir + "/check_ceph_mon" ]
+
+    arguments = {
+        "-I" = {
+            value = "$ceph_mon_id$"
+            description = "mon ID to be checked for availability."
+        }
+    }
+    
+    {% if 'master' not in group_names %}vars.ceph_mon_id = "{{ inventory_hostname.split('.')[0] }}"
+    {% endif %}
+}
