@@ -1,0 +1,17 @@
+object CheckCommand "check_ceph_df" {
+    command = [ "sudo", PluginDir + "/check_ceph_df" ]
+
+    arguments = {
+        "-W" = {
+            value = "$ceph_df_warn$"
+            description = "warn above this percent RAW USED."
+        }
+        "-C" = {
+            value = "$ceph_df_crit$"
+            description = "crit above this percent RAW USED."
+        }
+    }
+    
+    vars.ceph_df_warn = 80
+    vars.ceph_df_crit = 90
+}

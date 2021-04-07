@@ -1,0 +1,4 @@
+object ServiceGroup "Ceph RAW capacity usage" {
+  display_name = "Ceph RAW capacity usage"
+  assign where match("check_ceph_df", service.check_command)
+}
