@@ -1,0 +1,6 @@
+---
+- set_fact:
+    enable_plugins: "{{ enable_plugins | default([]) + [ ansible_role_name ] }}"
+  when: >
+    force_enable_plugin_openstack_cinder_services is defined and
+    force_enable_plugin_openstack_cinder_services
