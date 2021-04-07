@@ -46,10 +46,7 @@
 
 - name: Set docker sudoers privileges.
   lineinfile:
-    line: "{{ item }}"
+    line: "{{ icinga2_user }} ALL=(ALL) NOPASSWD: {{ icinga2_nagios_plugins_install_dir }}/check_docker"
     path: /etc/sudoers.d/icinga
     validate: /usr/sbin/visudo -cf %s
-  loop:
-   - "icinga ALL=(ALL) NOPASSWD: /usr/lib/nagios/plugins/check_docker"
-   - "nagios ALL=(ALL) NOPASSWD: /usr/lib/nagios/plugins/check_docker"
   when: not icinga2_docker_chk.stat.exists
