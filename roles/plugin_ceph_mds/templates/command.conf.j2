@@ -12,7 +12,7 @@ object CheckCommand "check_ceph_mds" {
         }
     }
     
-    {% if 'master' not in group_names %}vars.ceph_mds_name = "{{ inventory_hostname | splitext | first }}"
+    {% if 'master' not in group_names %}vars.ceph_mds_name = "{{ inventory_hostname.split('.')[0] }}"
     {% endif %}
     vars.ceph_mds_filesystem = "cephfs"
 }
