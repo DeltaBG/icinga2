@@ -1,0 +1,18 @@
+object CheckCommand "check_ceph_mds" {
+    command = [ "sudo", PluginDir + "/check_ceph_mds" ]
+
+    arguments = {
+        "-n" = {
+            value = "$ceph_mds_name$"
+            description = "mds daemon name."
+        }
+        "-f" = {
+            value = "$ceph_mds_filesystem$"
+            description = "mds filesystem name."
+        }
+    }
+    
+    {% if 'master' not in group_names %}vars.ceph_mds_name = "{{ inventory_hostname | splitext | first }}"
+    {% endif %}
+    vars.ceph_mds_filesystem = "cephfs"
+}
