@@ -5,7 +5,7 @@ object CheckCommand "mysql_custom" {
 
         arguments = {
                 "-H" = {
-                        value = "$mysql_hostname$"
+                        value = "$mysql_host$"
                         description = "Host name, IP Address, or unix socket (must be an absolute path)"
                 }
                 "-P" = {
@@ -78,7 +78,7 @@ object CheckCommand "mysql_custom" {
                 }
         }
 
-        vars.mysql_hostname = "$check_address$"
+        vars.mysql_host = "$check_address$"
 }
 
 
@@ -89,7 +89,7 @@ object CheckCommand "mysql_health_custom" {
 
         arguments = {
                 "--hostname" = {
-                        value = "$mysql_health_hostname$"
+                        value = "$mysql_health_host$"
                         description = "the database server's hostname"
                 }
                 "--port" = {
@@ -234,5 +234,5 @@ object CheckCommand "mysql_health_custom" {
                 }
         }
 
-        vars.mysql_health_hostname = "$check_address$"
+        vars.mysql_health_host = "$check_address$"
 }

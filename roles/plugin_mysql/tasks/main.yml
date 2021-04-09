@@ -18,6 +18,19 @@
     state: present
   when: not icinga2_check_mysql_health_chk.stat.exists
 
+- name: Install cpanm package.
+  package:
+    name: "{{ perl_cpanm_package }}"
+    state: present
+  when: not icinga2_check_mysql_health_chk.stat.exists
+
+- name: Install perl modules
+  cpanm:
+    name: "{{ item }}"
+  loop:
+    - DBD
+  when: not icinga2_check_mysql_health_chk.stat.exists
+
 - name: Download check_mysql_health plugin
   get_url:
     url: "{{ icinga2_check_mysql_health_download_url }}"
