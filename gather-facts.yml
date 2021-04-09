@@ -12,9 +12,20 @@
         patterns: "plugin_*"
       delegate_to: localhost
       register: find_plugins
+      when: >
+        icinga2_force_plugins is not defined and
+        icinga2_force_plugins|length == 0
     - set_fact:
         icinga2_plugins: "{{ icinga2_plugins | default([]) + [ item.path | basename ] }}"
       loop: "{{ find_plugins.files }}"
+      when: >
+        icinga2_force_plugins is not defined and
+        icinga2_force_plugins|length == 0
+    - set_fact:
+        icinga2_plugins: "{{ icinga2_force_plugins }}"
+      when: >
+        icinga2_force_plugins is defined and
+        icinga2_force_plugins|length > 0
     - name: Available icinga2 plugins
       debug:
         var: icinga2_plugins
@@ -26,6 +37,9 @@
   serial: '{{ icinga2_serial|default("0") }}'
   gather_facts: True
   tasks:
+    - name: Set default for enable_plugins
+      set_fact:
+        enable_plugins: "{{ [] }}"
     - name: Gather extended facts.
       deltabg.extended_facts.extended_facts:
     - name: Include role task set_facts
