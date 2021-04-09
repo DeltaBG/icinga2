@@ -2,5 +2,7 @@
 - set_fact:
     enable_plugins: "{{ enable_plugins | default([]) + [ ansible_role_name ] }}"
   when: >
-    force_enable_plugin_docker is defined and
+    ((ansible_facts.docker is defined and 
+    ansible_facts.docker|length>0) and
+    icinga2_plugin_autodetect) or
     force_enable_plugin_docker
