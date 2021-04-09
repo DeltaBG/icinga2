@@ -2,4 +2,8 @@
 # Icinga2 config directory.
 icinga2_config_dir: /etc/icinga2
 
-icinga2_zone_master_endpoint_name: master
+# Force enable plugin
+force_enable_plugin_openstack_compute_services: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"

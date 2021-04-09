@@ -2,6 +2,10 @@
 # Icinga2 config directory.
 icinga2_config_dir: /etc/icinga2
 
+# Force enable plugin
+force_enable_plugin_ceph_mds: no
+
+# Icinga2 master zone name
 icinga2_zone_master_endpoint_name: master
 
 icinga2_ceph_mds_version: HEAD

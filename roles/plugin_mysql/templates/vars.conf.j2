@@ -1,5 +1,6 @@
 # MySQL plugin
 {% if ansible_facts.mysql is defined and ansible_facts.mysql|length>0 %}
+vars.mysql_enabled = true
 {% if icinga2_mysql_monitoring_user is defined %}vars.mysql_username = "{{ icinga2_mysql_monitoring_user }}"
 {% endif %}
 vars.mysql_hostname = "localhost"
