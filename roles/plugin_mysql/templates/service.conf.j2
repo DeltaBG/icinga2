@@ -30,6 +30,6 @@ apply Service "mysql_health_slave_replication_lag" {
   check_command = "mysql_health"
   command_endpoint = host.vars.agent_endpoint
   vars.mysql_health_mode = "slave-lag"
-  assign where (host.vars.mysql_enabled == true && host.vars.mysql_slave_enabled == true) || (host.vars.mysql_health_passwordhost.vars.mysql_slave_enabled == true)
+  assign where (host.vars.mysql_enabled == true && host.vars.mysql_slave_enabled == true) || (host.vars.mysql_health_password && host.vars.mysql_slave_enabled == true)
   ignore where host.vars.mysql_disabled == true
 }
