@@ -10,3 +10,11 @@ icinga2_zone_master_endpoint_name: "master"
 
 icinga2_check_mysql_health_version: check_mysql_health-2.2.2
 icinga2_check_mysql_health_download_url: https://labs.consol.de/assets/downloads/nagios/{{ icinga2_check_mysql_health_version }}.tar.gz
+
+### Default MySQL access data ###
+# Creating a database user:
+# mysql> GRANT USAGE ON *.* TO 'icinga2monitoring'@'%' IDENTIFIED BY 'Ic1nGa2m0n1t0r1nG';
+icinga2_mysql_monitoring_host: localhost
+icinga2_mysql_monitoring_port: 3306
+icinga2_mysql_monitoring_user: icinga2monitoring
+icinga2_mysql_monitoring_password: Ic1nGa2m0n1t0r1nG
