@@ -3,11 +3,11 @@ object CheckCommand "cpu_custom" {
 
         arguments = {
                 "-w" = {
-                        value = "$cpu_warn$"
+                        value = "$cpu_warning$"
                         description = "For cpu|memory|disk Percentage usage. For net number of dropped/error packets. Default 85."
                 }
                 "-c" = {
-                        value = "$cpu_crit$"
+                        value = "$cpu_critical$"
                         description = "For cpu|memory|disk Percentage usage. For network number of dropped/error packets. Default 95."
                 }
                 "-C" = {
@@ -16,7 +16,7 @@ object CheckCommand "cpu_custom" {
                 }
         }
 
-        vars.cpu_warn = 85
-        vars.cpu_crit = 95
+        vars.cpu_warning = 85
+        vars.cpu_critical = 95
         vars.cpu_command = "cpu"
 }
