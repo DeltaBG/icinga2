@@ -11,7 +11,7 @@ object CheckCommand "memory_custom" {
                         description = "For cpu|memory|disk Percentage usage. For network number of dropped/error packets. Default 95."
                 }
                 "-C" = {
-                        set_if = "$memory_command$"
+                        value = "$memory_command$"
                         description = "Command <disk|cpu|memory|network> Default memory."
                 }
         }
