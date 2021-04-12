@@ -42,6 +42,12 @@
             name: icinga2_base
         - include_role:
             name: icinga2_agent
+            tasks_from: "{{ task_file }}"
+          loop:
+            - main
+            - agent_native
+          loop_control:
+            loop_var: task_file
         - include_role:
             name: plugin-nagios_plugins_all
         - name: Mark Icinga2 as installed
@@ -52,6 +58,14 @@
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         not icinga2_installed
+    - include_role:
+        name: icinga2_agent
+        tasks_from: "{{ task_file }}"
+      loop:
+        - main
+        - agent_snmp
+      loop_control:
+        loop_var: task_file
     - block: # Generate client configuration. Can be re-configured.
         - include_role:
             name: icinga2_client
