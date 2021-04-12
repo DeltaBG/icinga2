@@ -16,7 +16,7 @@
 
 - [ ] **plugin_uptime:** check_uptime - `./check_uptime`
 - [ ] **plugin_cpu:** check.py command cpu
-- [ ] **plugin_mem -> plugin_memory:** check.py command memory
+- [x] **plugin_memory:** check.py command memory
 - [ ] **plugin_conntrack:** check_conntrack.sh - https://raw.githubusercontent.com/bdossantos/nagios-plugins/master/check_conntrack.sh
 
 ## Hardware checks
