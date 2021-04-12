@@ -19,7 +19,7 @@
 
 apply Service "memory" {
   import "generic-service"
-  check_command = "mem_custom"
+  check_command = "memory_custom"
   command_endpoint = host.vars.agent_endpoint
   assign where host.vars.agent_endpoint
 }

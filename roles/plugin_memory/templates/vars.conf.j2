@@ -1,0 +1,7 @@
+# memory plugin
+{% if ansible_memory_mb is defined and ansible_memory_mb.real.total|int > 0 %}
+vars.memory_warning = {{ icinga2_plugin_memory_warning }}
+vars.memory_critical = {{ icinga2_plugin_memory_critical }}
+vars.memory_command = "memory"
+{% endif %}
+# EOF memory plugin

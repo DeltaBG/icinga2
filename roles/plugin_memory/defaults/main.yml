@@ -1,0 +1,13 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_memory: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+# Default thresholds. They can be overwritten in group vars and host vars.
+icinga2_plugin_memory_warning: 80
+icinga2_plugin_memory_critical: 95

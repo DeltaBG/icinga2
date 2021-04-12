@@ -1,7 +1,0 @@
-# mem plugin
-{% if ansible_memory_mb is defined and ansible_memory_mb.real.total|int > 0 %}
-vars.mem_warn = 85
-vars.mem_crit = 95
-vars.mem_command = "memory"
-{% endif %}
-# EOF mem plugin
