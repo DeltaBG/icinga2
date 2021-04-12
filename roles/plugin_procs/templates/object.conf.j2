@@ -1,0 +1,4 @@
+object ServiceGroup "procs_custom" {
+  display_name = "Processes Checks"
+  assign where match("*_procs_custom", service.check_command)
+}

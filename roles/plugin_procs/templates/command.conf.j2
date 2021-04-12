@@ -1,0 +1,81 @@
+template CheckCommand "procs_custom" {
+        command = [ PluginDir + "/check_procs" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$procs_warning$"
+                        description = "Generate warning state if metric is outside this range"
+                }
+                "-c" = {
+                        value = "$procs_critical$"
+                        description = "Generate critical state if metric is outside this range"
+                }
+                "-m" = {
+                        value = "$procs_metric$"
+                        description = "Check thresholds against metric"
+                }
+                "-t" = {
+                        value = "$procs_timeout$"
+                        description = "Seconds before plugin times out"
+                }
+                "-T" = {
+                        set_if = "$procs_traditional$"
+                        description = "Filter own process the traditional way by PID instead of /proc/pid/exe"
+                }
+                "-s" = {
+                        value = "$procs_state$"
+                        description = "Only scan for processes that have one or more of the status flags you specify"
+                }
+                "-p" = {
+                        value = "$procs_ppid$"
+                        description = "Only scan for children of the parent process ID indicated"
+                }
+                "-z" = {
+                        value = "$procs_vsz$"
+                        description = "Only scan for processes with VSZ higher than indicated"
+                }
+                "-r" = {
+                        value = "$procs_rss$"
+                        description = "Only scan for processes with RSS higher than indicated"
+                }
+                "-P" = {
+                        value = "$procs_pcpu$"
+                        description = "Only scan for processes with PCPU higher than indicated"
+                }
+                "-u" = {
+                        value = "$procs_user$"
+                        description = "Only scan for processes with user name or ID indicated"
+                }
+                "-a" = {
+                        value = "$procs_argument$"
+                        description = "Only scan for processes with args that contain STRING"
+                }
+                "--ereg-argument-array" = {
+                        value = "$procs_argument_regex$"
+                        description = "Only scan for processes with args that contain the regex STRING"
+                }
+                "-C" = {
+                        value = "$procs_command$"
+                        description = "Only scan for exact matches of COMMAND (without path)"
+                }
+                "-k" = {
+                        set_if = "$procs_nokthreads$"
+                        description = "Only scan for non kernel threads"
+                }
+        }
+}
+
+object CheckCommand "total_procs_custom" {
+        import "procs_custom"
+
+        vars.procs_warning = "$total_procs_warning$"
+        vars.procs_critical = "$total_procs_critical$"
+}
+
+object CheckCommand "zombie_procs_custom" {
+        import "procs_custom"
+
+        vars.procs_state = "Z"
+        vars.procs_warning = "$zombie_procs_warning$"
+        vars.procs_critical = "$zombie_procs_critical$"
+}

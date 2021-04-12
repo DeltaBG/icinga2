@@ -1,0 +1,15 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_procs: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+# Default thresholds. They can be overwritten in group vars and host vars.
+icinga2_plugin_procs_total_warning: 500
+icinga2_plugin_procs_total_critical: 700
+icinga2_plugin_procs_zombie_warning: 5
+icinga2_plugin_procs_zombie_critical: 10
