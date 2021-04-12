@@ -9,7 +9,7 @@
 - [ ] **plugin_procs:**
   - [ ] check_zombie_procs - `./check_procs -w 5 -c 10 -s Z`
   - [ ] check_total_procs - `./check_procs -w 140 -c 150`
-- [x] check_swap - https://www.monitoring-plugins.org/doc/man/check_swap.html
+- [x] **plugin_swap:** check_swap - https://www.monitoring-plugins.org/doc/man/check_swap.html
 
 ## General - Additional
 
