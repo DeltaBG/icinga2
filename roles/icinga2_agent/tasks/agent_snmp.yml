@@ -1,0 +1,22 @@
+---
+- block:
+  - name: Install snmpd package.
+    package:
+      name: "{{ icinga2_snmp_package }}"
+      state: present
+  
+  - name: Enable snmpd service.
+    service:
+      name: snmpd
+      enabled: yes
+      state: started
+  
+  - name: Configure snmpd service.
+    template:
+      src: snmpd.conf.j2
+      dest: /etc/snmp/snmpd.conf
+      mode: 0600
+      owner: root
+      group: root
+    notify: restart snmpd
+  when: icinga2_enable_agent_snmp

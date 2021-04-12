@@ -1,2 +1,3 @@
 ---
 icinga2_enable_agent_native: yes
+icinga2_snmp_package: net-snmp

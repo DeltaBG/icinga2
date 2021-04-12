@@ -3,3 +3,8 @@
   service:
     name: icinga2
     state: restarted
+
+- name: restart snmpd
+  service:
+    name: snmpd
+    state: restarted
