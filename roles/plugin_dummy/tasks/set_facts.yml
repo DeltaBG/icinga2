@@ -1,0 +1,5 @@
+---
+- set_fact:
+    enable_plugins: "{{ enable_plugins | default([]) + [ ansible_role_name ] }}"
+  when: >
+    force_enable_plugin_dummy

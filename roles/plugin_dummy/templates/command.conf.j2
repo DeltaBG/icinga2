@@ -1,0 +1,7 @@
+object CheckCommand "dummy_custom" {
+        command = [ PluginDir + "/check_dummy" ]
+
+        command += [ "0", "$dummy_text$" ]
+
+        vars.dummy_text = "Dummy plugin."
+}
