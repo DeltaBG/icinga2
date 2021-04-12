@@ -3,7 +3,8 @@
 ## General - nagios-plugins-all
 
 - [x] **native:** check_ping
-- [ ] **plugin_users:** check_users - `./check_users -w 4 -c 5`
+- [x] **plugin_dummy:** check_dummy - Disabled by default. `force_enable_plugin_dummy: yes` to enable this plugin.
+- [x] **plugin_users:** check_users - `./check_users -w 4 -c 5`
 - [x] **plugin_disk:** check_disk - `./check_disk -w 16% -c 15%`
 - [x] **plugin_load:** check_load - `./check_load -w 75 -c 85`
 - [ ] **plugin_procs:**
