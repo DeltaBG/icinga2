@@ -1,2 +1,2 @@
 ---
-icinga2_can_install_agent: yes
+icinga2_enable_agent_native: yes
