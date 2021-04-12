@@ -8,6 +8,6 @@ force_enable_plugin_users: no
 # Icinga2 master zone name
 icinga2_zone_master_endpoint_name: "master"
 
-
+# Default thresholds. They can be overwritten in group vars and host vars.
 icinga2_plugin_users_wgreater: 5
 icinga2_plugin_users_cgreater: 10
