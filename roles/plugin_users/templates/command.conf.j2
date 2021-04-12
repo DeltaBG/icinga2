@@ -1,0 +1,14 @@
+object CheckCommand "users_custom" {
+        command = [ PluginDir + "/check_users" ]
+
+        arguments = {
+                "-w" = {
+                        value = "$users_wgreater$"
+                        description = "Set WARNING status if more than INTEGER users are logged in"
+                }
+                "-c" = {
+                        value = "$users_cgreater$"
+                        description = "Set CRITICAL status if more than INTEGER users are logged in"
+                }
+        }
+}

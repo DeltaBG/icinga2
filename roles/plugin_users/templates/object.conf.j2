@@ -1,0 +1,4 @@
+object ServiceGroup "users_custom" {
+  display_name = "Users Checks"
+  assign where match("users_custom", service.check_command)
+}
