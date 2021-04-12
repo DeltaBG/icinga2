@@ -7,9 +7,9 @@
 - [x] **plugin_users:** check_users - `./check_users -w 4 -c 5`
 - [x] **plugin_disk:** check_disk - `./check_disk -w 16% -c 15%`
 - [x] **plugin_load:** check_load - `./check_load -w 75 -c 85`
-- [ ] **plugin_procs:**
-  - [ ] check_zombie_procs - `./check_procs -w 5 -c 10 -s Z`
-  - [ ] check_total_procs - `./check_procs -w 140 -c 150`
+- [x] **plugin_procs:**
+  - [x] check_zombie_procs - `./check_procs -w 5 -c 10 -s Z`
+  - [x] check_total_procs - `./check_procs -w 140 -c 150`
 - [x] **plugin_swap:** check_swap - https://www.monitoring-plugins.org/doc/man/check_swap.html
 
 ## General - Additional
