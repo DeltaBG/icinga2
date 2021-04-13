@@ -1,5 +1,5 @@
 object Endpoint "{{ inventory_hostname }}" {
-        host = "{{ ansible_host }}"
+        host = "{{ icinga2_client_host }}"
 }
 
 object Zone "{{ inventory_hostname }}" {
@@ -12,7 +12,7 @@ object Host "{{ inventory_hostname }}" {
   name = "{{ inventory_hostname }}"
   vars.agent_endpoint = name
   vars.client_endpoint = "{{ inventory_hostname }}"
-  address = "{{ ansible_host }}"
+  address = "{{ icinga2_client_host }}"
   vars.os = "{{ ansible_system }}"
   vars.os_family = "{{ ansible_distribution }}"
 
