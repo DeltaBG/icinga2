@@ -72,7 +72,6 @@ view   systemonly  included   .1.3.6.1.2.1.25.1
 #rocommunity6 public default -V systemonly
 {% for address in icinga2_snmpd_rocommunity_addresses %}
 rocommunity public {{ address }}
-
 {% endfor %}
 
 # SNMPv3 doesn't use communities, but users with (optionally) an

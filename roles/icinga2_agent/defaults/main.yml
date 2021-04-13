@@ -8,3 +8,5 @@ icinga2_enable_agent_snmp: yes
 icinga2_snmpd_agentaddress: "udp:{{ ansible_default_ipv4.address }}:161"
 icinga2_snmpd_rocommunity_addresses:
   - 127.0.0.1/32
+  - "{{ ansible_default_ipv4.address }}"
+  - "{{ hostvars[groups['master'][0]].ansible_default_ipv4.address }}"
