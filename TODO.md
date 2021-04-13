@@ -24,7 +24,9 @@
 - [ ] **plugin_iostats -> plugin_iostat:** check_iostat
 - [ ] **plugin_raid:** check_raid.sh - https://github.com/glensc/nagios-plugin-check_raid
 - [ ] **plugin_ipmi:** https://www.thomas-krenn.com/en/wiki/IPMI_Sensor_Monitoring_Plugin_setup
-- [ ] **plugin_network (SNMP):**  https://exchange.nagios.org/directory/Plugins/Network-Protocols/SNMP/Advanced-Network-Interface-Check--2D-check_netint--2F-check_snmp_netint/details
+- [x] **plugin_snmp:**
+  - [x] check_snmp_netint.pl - https://exchange.nagios.org/directory/Plugins/Network-Protocols/SNMP/Advanced-Network-Interface-Check--2D-check_netint--2F-check_snmp_netint/details
+  - [x] check_snmp_mem.pl - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_snmp_mem/details
 - [ ] **plugin_bonding:** check_linux_bonding - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_linux_bonding/details
 - [ ] **plugin_sensors:** https://github.com/matteocorti/check_lm_sensors
   - [ ] check_cpu_temp
