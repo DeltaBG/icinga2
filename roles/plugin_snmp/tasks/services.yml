@@ -1,0 +1,38 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Copy check_snmp_mem.pl plugin on Master
+  copy:
+    src: "check_snmp_mem.pl"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_snmp_mem.pl"
+    mode: 0755
+
+- name: Copy check_snmp_netint.pl plugin on Master
+  copy:
+    src: "check_snmp_netint.pl"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_snmp_netint.pl"
+    mode: 0755
+
+- name: Configure Icinga2 service.
+  template:
+    src: service.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/service_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2
+
+- name: Configure Icinga2 service groups.
+  template:
+    src: object.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/group_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2

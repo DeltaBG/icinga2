@@ -1,0 +1,9 @@
+object ServiceGroup "snmp_interface_custom" {
+  display_name = "SNMP Interface Checks"
+  assign where match("snmp_interface_custom", service.check_command)
+}
+
+object ServiceGroup "snmp_memory_custom" {
+  display_name = "SNMP Memory Checks"
+  assign where match("snmp_memory_custom", service.check_command)
+}

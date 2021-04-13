@@ -1,0 +1,21 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_snmp: yes
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+icinga2_check_snmp_int_download_url: "http://nagios.manubulon.com/check_snmp_int.pl"
+
+# Default thresholds. They can be overwritten in group vars and host vars.
+icinga2_plugin_snmp_community: "public"
+icinga2_plugin_snmp_memory_warning: "94,50"
+icinga2_plugin_snmp_memory_critical: "98,80"
+icinga2_plugin_snmp_interface: "{% for interface in ansible_interfaces | sort %}{% if hostvars[inventory_hostname]['ansible_%s' % interface] is defined and hostvars[inventory_hostname]['ansible_%s' % interface]['active'] %}{{interface}}|{% endif %}{% endfor %}"
+icinga2_plugin_snmp_interface_warning: "300,400"
+icinga2_plugin_snmp_interface_critical: "0,600"
+
+
