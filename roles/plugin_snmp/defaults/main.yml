@@ -14,7 +14,9 @@ icinga2_check_snmp_int_download_url: "http://nagios.manubulon.com/check_snmp_int
 icinga2_plugin_snmp_community: "public"
 icinga2_plugin_snmp_memory_warning: "94,50"
 icinga2_plugin_snmp_memory_critical: "98,80"
-icinga2_plugin_snmp_interface: "{% for interface in ansible_interfaces | sort %}{% if hostvars[inventory_hostname]['ansible_%s' % interface] is defined and hostvars[inventory_hostname]['ansible_%s' % interface]['active'] %}{{interface}}|{% endif %}{% endfor %}"
+icinga2_plugin_snmp_interface:
+  - eth0
+  - eth1
 icinga2_plugin_snmp_interface_warning: "300,400"
 icinga2_plugin_snmp_interface_critical: "0,600"
 

@@ -7,7 +7,7 @@ vars.snmp_memory = true
 vars.snmp_memory_warning = "{{ icinga2_plugin_snmp_memory_warning }}"
 vars.snmp_memory_critical = "{{ icinga2_plugin_snmp_memory_critical }}"
 
-vars.snmp_interface = "{{ icinga2_plugin_snmp_interface }}"
+vars.snmp_interface = "{{ icinga2_plugin_snmp_interface | join('|') }}"
 vars.snmp_interface_warning = "{{ icinga2_plugin_snmp_interface_warning }}"
 vars.snmp_interface_critical = "{{ icinga2_plugin_snmp_interface_critical }}"
 
