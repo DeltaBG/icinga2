@@ -17,9 +17,9 @@
  * own description, e.g. "{{ inventory_hostname }}".
  */
 
-apply Service for (iostats => config in host.vars.iostats_disks){
+apply Service for (iostat => config in host.vars.iostat_disks){
   import "generic-service"
-  check_command = "iostats_custom"
+  check_command = "iostat_custom"
   command_endpoint = host.vars.agent_endpoint
   assign where host.vars.agent_endpoint
   vars += config

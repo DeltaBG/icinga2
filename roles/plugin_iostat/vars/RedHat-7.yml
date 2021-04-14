@@ -2,3 +2,7 @@
 icinga2_user: icinga
 icinga2_group: icinga
 icinga2_nagios_plugins_install_dir: /usr/lib64/nagios/plugins
+
+icinga2_required_packages:
+  - sysstat
+  - bc

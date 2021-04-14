@@ -1,0 +1,4 @@
+object ServiceGroup "iostat_custom" {
+  display_name = "IOstat Checks"
+  assign where match("iostat_custom", service.check_command)
+}

@@ -1,0 +1,11 @@
+# IOstat plugin
+{% if ansible_devices.keys()|list is defined and ansible_devices.keys()|list|length>0 %}
+{% for disk in ansible_devices.keys()|list %}
+{% if not disk | regex_search(icinga2_plugin_iostat_excluded_devices) %}
+vars.iostat_disks["iostat on {{ disk }}"] = {
+  iostat_disk = "{{ disk }}"
+}
+{% endif %}     
+{% endfor %}
+{% endif %}
+# EOF IOstat plugin

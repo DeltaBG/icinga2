@@ -1,0 +1,19 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install required packages.
+  package:
+    name: "{{ icinga2_required_packages }}"
+    state: present
+
+- name: Get check_iostat plugin
+  get_url:
+    url: "{{ icinga2_check_iostat_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
+    mode: 0755

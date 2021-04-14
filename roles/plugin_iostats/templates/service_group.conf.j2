@@ -1,4 +1,0 @@
-object ServiceGroup "iostats" {
-  display_name = "IOstats Checks"
-  assign where match("iostats*", service.check_command)
-}
