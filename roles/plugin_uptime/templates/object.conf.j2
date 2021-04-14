@@ -1,0 +1,4 @@
+object ServiceGroup "uptime_custom" {
+  display_name = "Uptime Checks"
+  assign where match("uptime_custom", service.check_command)
+}

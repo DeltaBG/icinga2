@@ -1,0 +1,27 @@
+object CheckCommand "uptime_custom" {
+        command = [ PluginDir + "/check_uptime" ]
+
+        arguments = {
+                "--warning" = {
+                        value = "$uptime_warning$"
+                        description = "Min. number of uptime to generate warning"
+                        required = true
+                }
+                "--critical" = {
+                        value = "$uptime_critical$"
+                        description = "Min. number of uptime to generate critical alert ( w < c )"
+                        required = true
+                }
+                "--for" = {
+                        set_if = "$uptime_for$"
+                        description = "Show uptime in a pretty format (Running for x weeks, x days, ...)"
+                }
+                "--since" = {
+                        set_if = "$uptime_since$"
+                        description = "Show last boot in yyyy-mm-dd HH:MM:SS format (output from 'uptime -s')"
+                }
+        }
+
+        vars.uptime_warning = "30"
+        vars.uptime_critical = "10"
+}

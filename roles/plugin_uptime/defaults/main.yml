@@ -1,0 +1,15 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_uptime: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+icinga2_check_uptime_download_url: "https://raw.githubusercontent.com/DeltaBG/icinga2-additional-plugins/main/check_uptime"
+
+# Default thresholds. They can be overwritten in group vars and host vars.
+icinga2_plugin_uptime_warning: "30"
+icinga2_plugin_uptime_critical: "10"
