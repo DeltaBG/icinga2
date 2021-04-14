@@ -8,7 +8,8 @@ force_enable_plugin_snmp: yes
 # Icinga2 master zone name
 icinga2_zone_master_endpoint_name: "master"
 
-icinga2_check_snmp_int_download_url: "http://nagios.manubulon.com/check_snmp_int.pl"
+icinga2_check_snmp_mem_download_url: "https://raw.githubusercontent.com/DeltaBG/icinga2-additional-plugins/main/check_snmp_mem"
+icinga2_check_snmp_netint_download_url: "https://raw.githubusercontent.com/DeltaBG/icinga2-additional-plugins/main/check_snmp_netint"
 
 # Default thresholds. They can be overwritten in group vars and host vars.
 icinga2_plugin_snmp_community: "public"

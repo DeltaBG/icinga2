@@ -70,7 +70,7 @@ template CheckCommand "snmp_command_custom" {
 object CheckCommand "snmp_memory_custom" {
 	import "snmp_command_custom"
 
-	command = [ PluginDir + "/check_snmp_mem.pl" ]
+	command = [ PluginDir + "/check_snmp_mem" ]
 
 	arguments += {
 		"-f" = {
@@ -117,7 +117,7 @@ object CheckCommand "snmp_memory_custom" {
 object CheckCommand "snmp_interface_custom" {
 	import "snmp_command_custom"
 
-	command = [ PluginDir + "/check_snmp_netint.pl" ]
+	command = [ PluginDir + "/check_snmp_netint" ]
 
 	arguments += {
 		"-n" = {

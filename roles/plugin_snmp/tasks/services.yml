@@ -7,16 +7,16 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
 
-- name: Copy check_snmp_mem.pl plugin on Master
-  copy:
-    src: "check_snmp_mem.pl"
-    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_snmp_mem.pl"
+- name: Get check_snmp_mem plugin on Master
+  get_url:
+    url: "{{ icinga2_check_snmp_mem_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
     mode: 0755
 
-- name: Copy check_snmp_netint.pl plugin on Master
-  copy:
-    src: "check_snmp_netint.pl"
-    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_snmp_netint.pl"
+- name: Get check_snmp_netint plugin on Master
+  get_url:
+    url: "{{ icinga2_check_snmp_netint_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
     mode: 0755
 
 - name: Configure Icinga2 service.
