@@ -20,7 +20,7 @@
 - [ ] **plugin_conntrack:** check_conntrack.sh - https://raw.githubusercontent.com/bdossantos/nagios-plugins/master/check_conntrack.sh
 
 ## Hardware checks
-- [ ] **plugin_smartctl -> plugin_smart:** check_smart.pl - https://raw.githubusercontent.com/Napsty/check_smart/master/check_smart.pl require `smartmontools`
+- [X] **plugin_smart:** check_smart.pl - https://raw.githubusercontent.com/Napsty/check_smart/master/check_smart.pl require `smartmontools`
 - [x] **plugin_iostat:** check_iostat
 - [ ] **plugin_raid:** check_raid.sh - https://github.com/glensc/nagios-plugin-check_raid
 - [ ] **plugin_ipmi:** https://www.thomas-krenn.com/en/wiki/IPMI_Sensor_Monitoring_Plugin_setup
