@@ -1,0 +1,4 @@
+object ServiceGroup "Network Interfaces Checks" {
+  display_name = "Network Interfaces Checks"
+  assign where match("net_interfaces_custom", service.check_command)
+}

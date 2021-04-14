@@ -1,0 +1,9 @@
+# BEGIN net_interfaces plugin
+{% if force_enable_plugin_net_interfaces %}
+{% for interface in icinga2_net_interfaces_interfaces %}
+vars.interfaces["Interface {{ interface }}"] = {
+  interface = "{{ interface }}"
+}     
+{% endfor %}
+{% endif %}
+# EOF net_interfaces plugin

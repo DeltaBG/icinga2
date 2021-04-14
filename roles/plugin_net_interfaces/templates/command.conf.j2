@@ -1,0 +1,27 @@
+object CheckCommand "net_interfaces_custom" {
+        command = [ PluginDir + "/check_net_interfaces" ]
+
+        arguments = {
+                "-i" = {
+                        value = "$net_interface_name$"
+                        description = "Network interface"
+                }
+                "-w" = {
+                        value ="$net_interface_warn$"
+                        description = "Warning threshold"
+                }
+                "-c" = {
+                        value ="$net_interface_crit$"
+                        description = "Critical threshold"
+                }
+                "-s" = {
+                        value ="$net_interface_scale$"
+                        description = "Scaled results ['KB', 'Kb', 'MB', 'Mb', 'GB', 'Gb']"
+                }
+        }
+
+        vars.net_interface_name = "eth0"
+        vars.net_interface_warn = "1000"
+        vars.net_interface_crit = "1500"
+        vars.net_interface_scale = "Kb"
+}

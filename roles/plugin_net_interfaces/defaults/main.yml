@@ -1,0 +1,14 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_net_interfaces: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+icinga2_net_interfaces_version: 1.0.0
+icinga2_net_interfaces_download_url: https://github.com/githubDante/ethMon/archive/refs/tags/v{{ icinga2_net_interfaces_version }}.tar.gz
+
+icinga2_net_interfaces_interfaces: "{{ ansible_interfaces }}" # Interfaces to monitor and override
