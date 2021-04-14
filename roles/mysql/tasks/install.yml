@@ -1,7 +1,7 @@
 ---
 - name: Install MySQL server.
   package:
-    name: "{{ __mysql_packages | join(',') }}"
+    name: "{{ __mysql_packages }}"
     state: present
 
 - name: Enable and start MySQL server.

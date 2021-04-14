@@ -1,7 +1,7 @@
 ---
 - name: Install Icinga2 packages.
   package:
-    name: "{{ icinga2_package_names|join(',') }}"
+    name: "{{ icinga2_package_names }}"
     state: present
 
 - name: Enable and start Icinga2 service.

@@ -9,6 +9,6 @@
 
 - name: Install Nagios plugins all packages.
   package:
-    name: "{{ icinga2_nagios_plugins_all_packages|join(',') }}"
+    name: "{{ icinga2_nagios_plugins_all_packages }}"
     state: present
   notify: restart icinga2

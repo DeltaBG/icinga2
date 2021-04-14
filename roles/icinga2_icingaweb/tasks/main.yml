@@ -1,7 +1,7 @@
 ---
 - name: Install Icinga2 web packages
   package:
-    name: "{{ icinga2_icingaweb_packages|join(',') }}"
+    name: "{{ icinga2_icingaweb_packages }}"
     state: present
 
 - name: Configure Icinga2 web server (Apache)

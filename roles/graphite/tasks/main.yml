@@ -6,7 +6,7 @@
 
 - name: Install Graphite prerequisite packages.
   package:
-    name: "{{ icinga2_graphite_prerequsites|join(',') }}"
+    name: "{{ icinga2_graphite_prerequsites }}"
     state: present
 
 - name: Create Graphite install directory.
@@ -52,7 +52,7 @@
 
 - name: Install required Graphite Python packages.
   package:
-    name: "{{ icinga2_graphite_python_packages|join(',') }}"
+    name: "{{ icinga2_graphite_python_packages }}"
     state: present
 
 - name: Install required Graphite Python modules.
