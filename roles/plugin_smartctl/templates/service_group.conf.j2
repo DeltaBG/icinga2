@@ -1,4 +1,4 @@
 object ServiceGroup "SMART" {
   display_name = "SMART Checks"
-  assign where match("*smart*", service.check_command)
+  assign where match("smart_custom", service.check_command)
 }

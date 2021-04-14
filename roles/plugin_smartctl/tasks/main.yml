@@ -7,54 +7,22 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
 
-- name: Check if plugin has been already installed.
-  stat:
-    path: "{{ icinga2_nagios_plugins_install_dir }}/check_smart"
-  register: icinga2_check_smart_chk
+- name: Install required packages.
+  package:
+    name: "{{ icinga2_required_packages }}"
+    state: present
 
-- name: Download plugin.
+- name: Get check_smart plugin
   get_url:
     url: "{{ icinga2_check_smart_download_url }}"
-    dest: "/tmp/"
-  when: not icinga2_check_smart_chk.stat.exists
-
-- name: Unpack plugin archive.
-  unarchive:
-    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
-    dest: "/tmp/"
-    remote_src: yes
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
     mode: 0755
-  when: not icinga2_check_smart_chk.stat.exists
 
-- name: Copy plugin to final destination.
-  copy:
-    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}/check_smart.pl"
-    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_smart"
-    remote_src: yes
-    mode: 0755
-  when: not icinga2_check_smart_chk.stat.exists
-
-- name: Cleanup plugin archive.
-  unarchive:
-    src: "/tmp/check_smart-{{ icinga2_check_smart_version }}.tar.gz"
-    dest: "/tmp/"
-    remote_src: yes
-    mode: 0755
-  when: not icinga2_check_smart_chk.stat.exists
-
-- name: Create initial sudoers file.
-  file:
-    path: /etc/sudoers.d/icinga
-    state: touch
+- name: Configure sudoers privileges.
+  template:
+    src: sudoers.j2
+    dest: "/etc/sudoers.d/icinga2_plugin_smart"
+    owner: "root"
+    group: "root"
     mode: 0600
-  when: not icinga2_check_smart_chk.stat.exists
-
-- name: Set smartctl sudoers privileges.
-  lineinfile:
-    line: "{{ item }}"
-    path: /etc/sudoers.d/icinga
     validate: /usr/sbin/visudo -cf %s
-  loop:
-    - "{{ icinga2_user }} ALL=(ALL) NOPASSWD: {{ icinga2_nagios_plugins_install_dir }}/check_smart"
-    - "{{ icinga2_user }} ALL=(ALL) NOPASSWD: /usr/sbin/smartctl"
-  when: not icinga2_check_smart_chk.stat.exists

@@ -1,4 +1,4 @@
-# Smartctl plugin
+# Smart plugin
 {% if ansible_facts.smartctl is defined and ansible_facts.smartctl|length>0 %}
 {% for device in ansible_facts.smartctl.devices %}
 vars.smart_devices["smart_device {{ device.name }}"] = {
@@ -7,4 +7,4 @@ vars.smart_devices["smart_device {{ device.name }}"] = {
 }
 {% endfor %}
 {% endif %}
-# EOF Smartctl plugin
+# EOF Smart plugin

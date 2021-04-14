@@ -17,9 +17,9 @@
  * own description, e.g. "{{ inventory_hostname }}".
  */
 
-apply Service for (check_smart_pl => config in host.vars.smart_devices){
+apply Service for (check_smart => config in host.vars.smart_devices){
   import "generic-service"
-  check_command = "smart_pl"
+  check_command = "smart_custom"
   command_endpoint = host.vars.agent_endpoint
   assign where host.vars.smart_enabled == true || host.vars.smart_devices
   vars += config
