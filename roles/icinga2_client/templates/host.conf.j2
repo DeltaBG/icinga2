@@ -15,7 +15,9 @@ object Host "{{ inventory_hostname }}" {
   address = "{{ icinga2_client_host }}"
   vars.os = "{{ ansible_system }}"
   vars.os_family = "{{ ansible_distribution }}"
-  enable_flapping = {{ icinga2_enable_flapping }}
+  {% if icinga2_enable_flapping %}enable_flapping = true
+  {% else %}enable_flapping = false
+  {% endif %}
 
   # Include plugin vars
   include_recursive "{{ inventory_hostname }}", "*.conf"
