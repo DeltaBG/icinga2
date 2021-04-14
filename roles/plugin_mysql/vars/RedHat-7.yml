@@ -3,4 +3,7 @@ icinga2_user: icinga
 icinga2_group: icinga
 icinga2_nagios_plugins_install_dir: /usr/lib64/nagios/plugins
 
-perl_cpanm_package: perl-App-cpanminus
+icinga2_required_packages:
+  - perl-Time-HiRes
+  - perl-DBI
+  - perl-DBD-MySQL
