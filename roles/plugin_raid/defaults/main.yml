@@ -8,5 +8,6 @@ force_enable_plugin_raid: no
 # Icinga2 master zone name
 icinga2_zone_master_endpoint_name: "master"
 
-icinga2_check_raid_version: 4.0.10
-icinga2_check_raid_download_url: https://github.com/glensc/nagios-plugin-check_raid/archive/{{ icinga2_check_raid_version }}.tar.gz
+icinga2_check_raid_download_url: "https://raw.githubusercontent.com/DeltaBG/icinga2-additional-plugins/main/check_raid"
+
+icinga2_storcli64_binary_download_url: "https://github.com/DeltaBG/icinga2-additional-plugins/raw/main/storcli/storcli64"

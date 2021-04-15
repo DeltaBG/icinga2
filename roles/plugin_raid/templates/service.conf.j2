@@ -17,9 +17,9 @@
  * own description, e.g. "{{ inventory_hostname }}".
  */
 
-apply Service "raid" {
+apply Service "RAID" {
   import "generic-service"
-  check_command = "raid"
+  check_command = "raid_custom"
   command_endpoint = host.vars.agent_endpoint
   assign where host.vars.raid_enabled == true
 }

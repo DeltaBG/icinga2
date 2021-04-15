@@ -1,0 +1,6 @@
+{{ icinga2_user }} ALL=(ALL) NOPASSWD: {{ icinga2_nagios_plugins_install_dir }}/check_raid
+{% if ansible_facts.raid.megaraid is defined and ansible_facts.raid.megaraid|length>0 %}
+{{ icinga2_user }} ALL=(root) NOPASSWD: /usr/local/bin/storcli64 -PDList -aALL -NoLog
+{{ icinga2_user }} ALL=(root) NOPASSWD: /usr/local/bin/storcli64 -LdInfo -Lall -aALL -NoLog
+{{ icinga2_user }} ALL=(root) NOPASSWD: /usr/local/bin/storcli64 -AdpBbuCmd -GetBbuStatus -aALL -NoLog
+{% endif %}

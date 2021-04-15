@@ -7,57 +7,27 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
 
-- name: Check if check_raid plugin has been already installed.
-  stat:
-    path: "{{ icinga2_nagios_plugins_install_dir }}/check_raid/check_raid.sh"
-  register: icinga2_check_raid_chk
-
-- name: Install make package.
-  package:
-    name: make
-    state: present
-  when: not icinga2_check_raid_chk.stat.exists
-
-- name: Install cpanm package.
-  package:
-    name: "{{ perl_cpanm_package }}"
-    state: present
-  when: not icinga2_check_raid_chk.stat.exists
-
-- name: Download check_raid plugin.
+- name: Get check_raid plugin
   get_url:
     url: "{{ icinga2_check_raid_download_url }}"
-    dest: "/tmp/"
-  when: not icinga2_check_raid_chk.stat.exists
-
-- name: Install check_raid perl modules.
-  cpanm:
-    name: "{{ item }}"
-  loop:
-    - Module::Install
-    - Class::Accessor
-    - Monitoring::Plugin
-    - Module::Pluggable
-  when: not icinga2_check_raid_chk.stat.exists
-
-- name: Install check_raid Module::Pluggable perl module.
-  cpanm:
-    name: Module::Pluggable
-    version: 5.2
-  when: not icinga2_check_raid_chk.stat.exists
-
-- name: Unpack check_raid plugin archive.
-  unarchive:
-    src: "/tmp/nagios-plugin-check_raid-{{ icinga2_check_raid_version }}.tar.gz"
-    dest: /tmp/
-    remote_src: yes
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
     mode: 0755
-  when: not icinga2_check_raid_chk.stat.exists
 
-- name: Copy unarchived check_raid dir to final destination.
-  copy:
-    src: "/tmp/nagios-plugin-check_raid-{{ icinga2_check_raid_version }}/"
-    dest: "{{ icinga2_nagios_plugins_install_dir }}/check_raid"
-    remote_src: yes
-    mode: 0755
-  when: not icinga2_check_raid_chk.stat.exists
+- block:
+  - name: Get storcli64 binary
+    get_url:
+      url: "{{ icinga2_storcli64_binary_download_url }}"
+      dest: "/usr/local/bin/"
+      mode: 0755
+  when: >
+    ansible_facts.raid.megaraid is defined and
+    ansible_facts.raid.megaraid|length>0
+
+- name: Configure sudoers privileges.
+  template:
+    src: sudoers.j2
+    dest: "/etc/sudoers.d/icinga2_plugin_raid"
+    owner: "root"
+    group: "root"
+    mode: 0600
+    validate: /usr/sbin/visudo -cf %s
