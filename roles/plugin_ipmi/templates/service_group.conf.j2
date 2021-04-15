@@ -1,0 +1,9 @@
+object ServiceGroup "ipmi_alive_custom" {
+  display_name = "IPMI Alive Checks"
+  assign where match("ipmi_alive_custom", service.check_command)
+}
+
+object ServiceGroup "ipmi_sensor_custom" {
+  display_name = "IPMI Sensor Checks"
+  assign where match("ipmi_sensor_custom", service.check_command)
+}

@@ -1,0 +1,15 @@
+---
+- name: Configure the client plugin vars.
+  template:
+    src: vars.conf.j2
+    dest: "{{ icinga2_config_dir }}/zones.d/{{ icinga2_zone_master_endpoint_name }}/{{ inventory_hostname }}/{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2 master
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+  when: >
+    (ipmi_ip_address is defined and
+    ipmi_ip_address|length>0) and
+    (ipmi_connectivity is defined and
+    ipmi_connectivity)

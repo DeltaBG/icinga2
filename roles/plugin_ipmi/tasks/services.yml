@@ -1,0 +1,37 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install required packages.
+  package:
+    name: "{{ icinga2_required_packages }}"
+    state: present
+
+- name: Get check_ipmi_sensor plugin on Master
+  get_url:
+    url: "{{ icinga2_check_ipmi_sensor_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
+    mode: 0755
+
+- name: Configure Icinga2 service.
+  template:
+    src: service.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/service_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2
+
+- name: Configure Icinga2 service groups.
+  template:
+    src: service_group.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/group_{{ ansible_role_name }}.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+  notify: restart icinga2

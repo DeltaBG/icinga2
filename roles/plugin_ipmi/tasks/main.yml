@@ -1,0 +1,61 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install required packages.
+  package:
+    name: "{{ icinga2_required_packages }}"
+    state: present
+
+- name: Get IPMI lan settings
+  shell: ipmitool -I open lan print 1 | grep -E "^IP\sAddress\s+:\s+" | awk '{print $4}'
+  register: ipmi_lan_settings
+  ignore_errors: yes
+  changed_when: false
+
+- set_fact:
+    ipmi_ip_address: "{{ ipmi_lan_settings.stdout }}"
+  when: not ipmi_lan_settings.failed
+
+- name: Check connectivity to IPMI
+  shell: ping -c 4 {{ ipmi_ip_address }}
+  delegate_to: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"
+  register: ipmi_connectivity_chk
+  ignore_errors: yes
+  changed_when: false
+  when: >
+    ipmi_ip_address is defined and
+    ipmi_ip_address|length>0
+
+- set_fact:
+    ipmi_connectivity: yes
+  when: not ipmi_connectivity_chk.failed
+
+- block:
+  - name: Create IPMI user
+    shell: ipmitool -I open user set name {{ icinga2_plugin_ipmi_user_id }} {{ icinga2_plugin_ipmi_username }}
+    register: create_ipmi_user
+    changed_when: false
+  - name: Set IPMI password
+    shell: ipmitool -I open user set password {{ icinga2_plugin_ipmi_user_id }} {{ icinga2_plugin_ipmi_password }}
+    register: set_ipmi_password
+    changed_when: false
+  - name: Set IPMI privilege
+    shell: ipmitool -I open channel setaccess 1 {{ icinga2_plugin_ipmi_user_id }} link=on ipmi=on callin=on privilege=2
+    register: set_ipmi_privilege
+    changed_when: false
+  - name: Enable IPMI user
+    shell: ipmitool -I open user enable {{ icinga2_plugin_ipmi_user_id }}
+    register: enable_ipmi_user
+    changed_when: false
+  when: >
+    (ipmi_ip_address is defined and
+    ipmi_ip_address|length>0) and
+    (ipmi_connectivity is defined and
+    ipmi_connectivity) and
+    icinga2_plugin_ipmi_autoconfig
