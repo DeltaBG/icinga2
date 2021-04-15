@@ -11,7 +11,7 @@ icinga2_zone_master_endpoint_name: "master"
 icinga2_check_ipmi_sensor_download_url: "https://raw.githubusercontent.com/DeltaBG/icinga2-additional-plugins/main/check_ipmi_sensor"
 
 # Default thresholds. They can be overwritten in group vars and host vars.
-icinga2_plugin_ipmi_autoconfig: yes # Automatically creates an IPMI user account
+icinga2_plugin_ipmi_autoconfig: no # Automatically creates an IPMI user account
 icinga2_plugin_ipmi_user_id: 10
 icinga2_plugin_ipmi_username: "icinga2"
 icinga2_plugin_ipmi_password: "Y0UrR4nD0mPaSS"
