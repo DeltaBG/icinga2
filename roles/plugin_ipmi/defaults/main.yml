@@ -15,4 +15,4 @@ icinga2_plugin_ipmi_autoconfig: yes # Automatically creates an IPMI user account
 icinga2_plugin_ipmi_user_id: 10
 icinga2_plugin_ipmi_username: "icinga2"
 icinga2_plugin_ipmi_password: "Y0UrR4nD0mPaSS"
-icinga2_plugin_ipmi_exclude_sensor_id: "4091" # Comma-separated ID's. 4091 is 'Chassis Intrusion'.
+icinga2_plugin_ipmi_exclude_sensor_id: "1143,4091" # Comma-separated ID's. 1143 and 4091 is 'Chassis Intrusion'.
