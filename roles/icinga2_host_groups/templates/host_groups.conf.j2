@@ -1,0 +1,12 @@
+/**
+ * Host groups.
+ */
+
+{% if icinga2_host_groups is defined %}{% for group in icinga2_host_groups %}object HostGroup "{{ group.name }}" {
+  display_name = "{{ group.display_name }}"
+
+  {{ group.assign_where_rule }}
+}
+
+{% endfor %}
+{% endif %}

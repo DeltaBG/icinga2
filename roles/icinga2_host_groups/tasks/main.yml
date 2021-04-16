@@ -1,0 +1,10 @@
+---
+- name: Configure Icinga2 host groups.
+  template:
+    src: host_groups.conf.j2
+    dest: "{{ icinga2_config_dir }}/conf.d/host_groups.conf"
+    owner: "{{ icinga2_user }}"
+    group: "{{ icinga2_group }}"
+    mode: 0644
+    backup: "{{ icinga2_backup_config }}"
+  notify: restart icinga2
