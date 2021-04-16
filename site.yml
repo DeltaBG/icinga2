@@ -66,6 +66,8 @@
               and registration of clients will not continue. After that is done, 
               re-run this playbook.
       when: not icinga2_installed
+    - include_role:
+        name: icinga2_host_groups
       
 - import_playbook: gather-facts.yml
 
