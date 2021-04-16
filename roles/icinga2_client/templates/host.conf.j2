@@ -19,6 +19,10 @@ object Host "{{ inventory_hostname }}" {
   {% else %}enable_flapping = false
   {% endif %}
 
+  {% if icinga2_host_group is defined %}
+  vars.group = "{{ icinga2_host_group }}"
+  {% endif %}
+
   # Include plugin vars
   include_recursive "{{ inventory_hostname }}", "*.conf"
 
