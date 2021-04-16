@@ -20,14 +20,14 @@
 - [ ] **plugin_conntrack:** check_conntrack.sh - https://raw.githubusercontent.com/bdossantos/nagios-plugins/master/check_conntrack.sh
 
 ## Hardware checks
-- [X] **plugin_smart:** check_smart.pl - https://raw.githubusercontent.com/Napsty/check_smart/master/check_smart.pl require `smartmontools`
+- [x] **plugin_smart:** check_smart.pl - https://raw.githubusercontent.com/Napsty/check_smart/master/check_smart.pl require `smartmontools`
 - [x] **plugin_iostat:** check_iostat
 - [x] **plugin_raid:** check_raid - https://github.com/glensc/nagios-plugin-check_raid
 - [x] **plugin_ipmi:** https://www.thomas-krenn.com/en/wiki/IPMI_Sensor_Monitoring_Plugin_setup
 - [x] **plugin_snmp:**
   - [x] check_snmp_netint.pl - https://exchange.nagios.org/directory/Plugins/Network-Protocols/SNMP/Advanced-Network-Interface-Check--2D-check_netint--2F-check_snmp_netint/details
   - [x] check_snmp_mem.pl - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_snmp_mem/details
-- [ ] **plugin_bonding:** check_linux_bonding - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_linux_bonding/details
+- [x] **plugin_bonding:** check_linux_bonding - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_linux_bonding/details
 - [ ] **plugin_sensors:** https://github.com/matteocorti/check_lm_sensors
   - [ ] check_cpu_temp
   - [ ] check_sys_temp
