@@ -15,12 +15,12 @@
 #   this token in the snmpd.conf file will disable write access to
 #   the variable.
 #   arguments:  location_string
-sysLocation    Sitting on the Dock of the Bay
-sysContact     Me <me@example.org>
+sysLocation    {{ icinga2_snmpd_sys_location }}
+sysContact     {{ icinga2_snmpd_sys_contact }}
 
 # sysservices: The proper value for the sysServices object.
 #   arguments:  sysservices_number
-sysServices    72
+sysServices    {{ icinga2_snmpd_sys_services }}
 
 
 

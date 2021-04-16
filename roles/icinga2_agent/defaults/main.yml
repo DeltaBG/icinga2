@@ -10,3 +10,7 @@ icinga2_snmpd_rocommunity_addresses:
   - 127.0.0.1/32
   - "{{ ansible_default_ipv4.address }}"
   - "{{ hostvars[groups['master'][0]].ansible_default_ipv4.address }}"
+
+icinga2_snmpd_sys_location: "Sitting on the Dock of the Bay"
+icinga2_snmpd_sys_contact: "Me <me@example.org>"
+icinga2_snmpd_sys_services: "72"
