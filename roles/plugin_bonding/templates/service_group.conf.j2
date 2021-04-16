@@ -1,0 +1,4 @@
+object ServiceGroup "bonding_custom" {
+  display_name = "Bonding Checks"
+  assign where match("bonding_custom", service.check_command)
+}

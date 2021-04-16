@@ -1,0 +1,17 @@
+object CheckCommand "bonding_custom" {
+        command = [ PluginDir + "/check_linux_bonding" ]
+
+        arguments = {
+                "-s" = {
+                        set_if = "$bond_state$"
+                        description = "Prefix alerts with alert state"
+                }
+                "--linebreak" = {
+                        value = "$bond_linebreak$"
+                        description = "Line separator: HTML (<br>) or REG (\n)"
+                }
+        }
+
+        vars.bond_state = true
+        vars.bond_linebreak = "REG"
+}
