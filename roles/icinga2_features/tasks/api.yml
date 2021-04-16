@@ -9,7 +9,7 @@
     dest: "{{ icinga2_config_dir }}/features-available/api.conf"
     owner: "{{ icinga2_user }}"
     group: "{{ icinga2_group }}"
-    mode: 0755
+    mode: 0644
   when: "'api' in icinga2_enabled_features"
 
 - name: Configure API user and password.
@@ -18,7 +18,7 @@
     dest: "{{ icinga2_config_dir }}/conf.d/api-users.conf"
     owner: "{{ icinga2_user }}"
     group: "{{ icinga2_group }}"
-    mode: 0755
+    mode: 0644
   when: "'api' in icinga2_enabled_features"
 
 - name: Generate TicketSalt for the first time. # noqa 305
