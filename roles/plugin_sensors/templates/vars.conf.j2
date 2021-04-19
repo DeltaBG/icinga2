@@ -1,0 +1,5 @@
+# Sensors plugin
+{% if available_sensors is defined and available_sensors|length>0 %}
+vars.sensors_high = [{% for sensor in available_sensors %} "{{ sensor }}=70,90",{% endfor %} ]
+{% endif %}
+# EOF Sensors plugin

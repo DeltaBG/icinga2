@@ -1,0 +1,11 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_sensors: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+icinga2_check_lm_sensors_download_url: "https://raw.githubusercontent.com/DeltaBG/icinga2-additional-plugins/main/check_lm_sensors"

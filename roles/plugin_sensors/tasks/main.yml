@@ -1,0 +1,32 @@
+---
+- name: Include distribution dependent variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install required packages.
+  package:
+    name: "{{ icinga2_required_packages }}"
+    state: present
+
+- name: Get check_lm_sensors plugin
+  get_url:
+    url: "{{ icinga2_check_lm_sensors_download_url }}"
+    dest: "{{ icinga2_nagios_plugins_install_dir }}/"
+    mode: 0755
+
+- name: Detect sensors
+  shell: yes YES | sensors-detect
+  changed_when: false
+
+- name: List available sensors
+  shell: "{{ icinga2_nagios_plugins_install_dir }}/check_lm_sensors --list | grep 'sensor' | grep -viE 'package|power|loc' | cut -d ':' -f 2 | sort -u"
+  register: get_sensors
+  changed_when: false
+
+- set_fact:
+    available_sensors: "{{ get_sensors.stdout_lines }}"
+  when: not get_sensors.failed

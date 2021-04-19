@@ -1,0 +1,28 @@
+object CheckCommand "sensors_custom" {
+        command = [ PluginDir + "/check_lm_sensors" ]
+
+        arguments = {
+                "-l" = {
+                        value = "$sensors_low$"
+                        description = "Specifies a check for a sensor value which is too low."
+                }
+                "-h" = {
+                        value ="$sensors_high$"
+                        description = "Specifies a check for a sensor value which is too high."
+                }
+                "-r" = {
+                        value ="$sensors_range$"
+                        description = "Specifies a check for a sensor value which should stay in a given range."
+                }
+                "-d" = {
+                        set_if ="$sensors_drives$"
+                        description = "Enable checks on drive temperature."
+                }
+                "--nodrives" = {
+                        set_if ="$sensors_nodrives$"
+                        description = "Disable checks on drive temperatures."
+                }
+        }
+
+        vars.sensors_nodrives = true
+}

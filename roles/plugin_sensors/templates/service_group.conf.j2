@@ -1,0 +1,4 @@
+object ServiceGroup "sensors_custom" {
+  display_name = "Sensors Checks"
+  assign where match("sensors_custom", service.check_command)
+}
