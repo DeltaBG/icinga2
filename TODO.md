@@ -28,9 +28,7 @@
   - [x] check_snmp_netint.pl - https://exchange.nagios.org/directory/Plugins/Network-Protocols/SNMP/Advanced-Network-Interface-Check--2D-check_netint--2F-check_snmp_netint/details
   - [x] check_snmp_mem.pl - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_snmp_mem/details
 - [x] **plugin_bonding:** check_linux_bonding - https://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_linux_bonding/details
-- [ ] **plugin_sensors:** https://github.com/matteocorti/check_lm_sensors
-  - [ ] check_cpu_temp
-  - [ ] check_sys_temp
+- [x] **plugin_sensors:** check_lm_sensors (custom) - https://github.com/DeltaBG/icinga2-additional-plugins/blob/main/check_lm_sensors
 
 ## Service checks - nagios-plugins-all
 
