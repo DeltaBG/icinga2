@@ -48,7 +48,9 @@
 - [ ] **plugin_memcached:** - check_memcached.pl - https://raw.githubusercontent.com/willixix/WL-NagiosPlugins/master/check_memcached.pl require `perl-Cache-Memcached`
 - [ ] **plugin_redis:** - check_redis.pl - https://raw.githubusercontent.com/willixix/WL-NagiosPlugins/master/check_redis.pl require `perl-Redis`
 - [ ] **plugin_rbl:** check_rbl - https://github.com/matteocorti/check_rbl
-
+- [ ] **plugin_haproxy:** - https://icinga.com/docs/icinga-2/latest/doc/10-icinga-template-library/#haproxy
+  - [ ] check_haproxy
+  - [ ] check_haproxy_status
 - [ ] **plugin_???:** - check_service.sh - https://raw.githubusercontent.com/jonschipp/nagios-plugins/master/check_service.sh
 
 ## Cloud checks
