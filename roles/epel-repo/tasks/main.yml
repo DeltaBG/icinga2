@@ -1,6 +1,16 @@
 ---
-
 - name: Install Epel repository.
   package:
     name: epel-release
     state: present
+  when: >
+    ansible_os_family == "RedHat" and
+    ansible_distribution_major_version != "6"
+
+- name: Install Epel repository (CentOS 6).
+  yum:
+    name: https://archives.fedoraproject.org/pub/archive/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    state: present
+  when: >
+    ansible_os_family == "RedHat" and
+    ansible_distribution_major_version == "6"
