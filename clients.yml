@@ -39,6 +39,15 @@
             ansible_os_family == "RedHat" and
             ansible_distribution_major_version == "8"
         - include_role:
+            name: epel-repo
+          when: >
+            ansible_os_family == "RedHat"
+        - include_role:
+            name: centos-release-scl
+          when: >
+            ansible_os_family == "RedHat" and
+            ansible_distribution_major_version != "8"
+        - include_role:
             name: icinga2_base
         - include_role:
             name: icinga2_agent
@@ -55,6 +64,8 @@
             path: "{{ icinga2_config_dir }}/installed"
             mode: 000
             state: touch
+        - set_fact: # noqa 502
+            icinga2_installed: True
       when: >
         hostvars[groups['master'][0]]['icinga2_configured'] and
         not icinga2_installed
