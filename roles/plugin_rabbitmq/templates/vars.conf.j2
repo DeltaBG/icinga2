@@ -1,0 +1,12 @@
+# Rabbitmq plugin
+{% if force_enable_plugin_rabbitmq is defined and force_enable_plugin_rabbitmq%}
+vars.force_enable_plugin_rabbitmq = true
+vars.rabbitmq_api_host = "{{ rabbitmq_api_host }}"
+vars.rabbitmq_api_username = "{{ rabbitmq_api_username }}"
+vars.rabbitmq_api_password = "{{ rabbitmq_api_password }}"
+vars.rabbitmq_consumers_api_url = "{{ rabbitmq_consumers_api_url }}"
+vars.rabbitmq_queue_api_url = "{{ rabbitmq_queue_api_url }}"
+vars.rabbitmq_consumers_crit = {{ rabbitmq_consumers_crit }}
+vars.rabbitmq_consumers_warn = {{ rabbitmq_consumers_warn }}
+{% endif %}
+# EOF Sensors plugin

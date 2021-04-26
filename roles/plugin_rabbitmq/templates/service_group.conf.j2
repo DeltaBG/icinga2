@@ -1,0 +1,4 @@
+object ServiceGroup "rabbitmq_custom" {
+  display_name = "RabbitMQ Checks"
+  assign where match("check_rabbitmq*", service.check_command)
+}

@@ -1,0 +1,26 @@
+---
+# Icinga2 config directory.
+icinga2_config_dir: /etc/icinga2
+
+# Force enable plugin
+force_enable_plugin_rabbitmq: no
+
+# Icinga2 master zone name
+icinga2_zone_master_endpoint_name: "master"
+
+icinga2_rabbitmq_download_urls:
+  - https://raw.githubusercontent.com/sol1/icinga-check-rabbitmq/master/check_rabbitmq_consumers.sh
+  - https://raw.githubusercontent.com/sol1/icinga-check-rabbitmq/master/check_rabbitmq_queuesize.sh
+
+rabbitmq_api_username: rabbit
+rabbitmq_api_password: rabbitmqapipassword
+rabbitmq_api_host: "http://localhost"
+rabbitmq_api_port: 15672
+rabbitmq_consumers_api_uri: "/api/consumers"
+rabbitmq_queue_api_uri: "/api/overview"
+rabbitmq_consumers_api_url: "{{ rabbitmq_api_host }}:{{ rabbitmq_api_port }}{{ rabbitmq_consumers_api_uri }}"
+rabbitmq_queue_api_url: "{{ rabbitmq_api_host }}:{{ rabbitmq_api_port }}{{ rabbitmq_queue_api_uri }}"
+rabbitmq_consumers_warn: 40
+rabbitmq_consumers_crit: 50
+rabbitmq_queuesize_warn: 40
+rabbitmq_queuesize_crit: 50

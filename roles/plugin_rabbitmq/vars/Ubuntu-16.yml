@@ -1,0 +1,8 @@
+---
+icinga2_user: nagios
+icinga2_group: nagios
+icinga2_nagios_plugins_install_dir: /usr/lib/nagios/plugins
+
+icinga2_required_packages:
+  - curl
+  - jq

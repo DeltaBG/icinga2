@@ -1,0 +1,71 @@
+/* NOT YET IMPLEMENTED
+*object CheckCommand "check_rabbitmq_consumers_custom" {
+*        command = [ PluginDir + "/check_rabbitmq_consumers.sh" ]
+*
+*        arguments = {
+*                "-u" = {
+*                        value = "$rabbitmq_api_username$"
+*                        description = "<RabbitMQ API username>"
+*                }
+*                "-p" = {
+*                        value = "$rabbitmq_api_password$"
+*                        description = "<RabbitMQ API password>"
+*                }
+*                "-a" = {
+*                        value = "$rabbitmq_consumers_api_url$"
+*                        description = "<API URL, e.g. http://localhost:15672/api/consumers>"
+*                }
+*                "-q" = {
+*                        value = "$rabbitmq_consumers_queue_name$"
+*                        description = "<RabbitMQ queue name, e.g. remote_deliveries>"
+*                }
+*                "-c" = {
+*                        value = "$rabbitmq_consumers_crit$"
+*                        description = "<Number of consumers when CRITICAL or less>"
+*                }
+*                "-w" = {
+*                        value = "$rabbitmq_consumers_warn$"
+*                        description = "<Number of consumers when WARNING or less>"
+*                }
+*        }
+*
+*        vars.rabbitmq_api_username = "{{ rabbitmq_api_username }}"
+*        vars.rabbitmq_api_password = "{{ rabbitmq_api_password }}"
+*        vars.rabbitmq_consumers_api_url = "{{ rabbitmq_consumers_api_url }}"
+*        vars.rabbitmq_consumers_crit = {{ rabbitmq_consumers_crit }}
+*        vars.rabbitmq_consumers_warn = {{ rabbitmq_consumers_warn }}
+*}
+*/
+
+object CheckCommand "check_rabbitmq_queuesize_custom" {
+        command = [ PluginDir + "/check_rabbitmq_queuesize.sh" ]
+
+        arguments = {
+                "-u" = {
+                        value = "$rabbitmq_api_username$"
+                        description = "<RabbitMQ API username>"
+                }
+                "-p" = {
+                        value = "$rabbitmq_api_password$"
+                        description = "<RabbitMQ API password>"
+                }
+                "-a" = {
+                        value = "$rabbitmq_queue_api_url$"
+                        description = "<API URL, e.g. http://localhost:15672/api/consumers>"
+                }
+                "-c" = {
+                        value = "$rabbitmq_queuesize_crit$"
+                        description = "<Number of consumers when CRITICAL or less>"
+                }
+                "-w" = {
+                        value = "$rabbitmq_queuesize_warn$"
+                        description = "<Number of consumers when WARNING or less>"
+                }
+        }
+
+        vars.rabbitmq_api_username = "{{ rabbitmq_api_username }}"
+        vars.rabbitmq_api_password = "{{ rabbitmq_api_password }}"
+        vars.rabbitmq_queue_api_url = "{{ rabbitmq_queue_api_url }}"
+        vars.rabbitmq_queuesize_crit = {{ rabbitmq_queuesize_crit }}
+        vars.rabbitmq_queuesize_warn = {{ rabbitmq_queuesize_warn }}
+}
